@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 class ShareContact extends StatelessWidget {
   const ShareContact({super.key});
@@ -17,11 +15,14 @@ class ShareContact extends StatelessWidget {
                 image: const AssetImage("assets/images/Logos.png"),
               ),
             )),
-        Container(
+        const SizedBox(
           child: Center(
               child: Text(
             "PT. Shield-On Service Tbk",
-            style: TextStyle(fontSize: 30),
+            style: TextStyle(
+                fontSize: 30,
+                fontFamily: "PTSerif",
+                fontWeight: FontWeight.w700),
           )),
         ),
         Container(
@@ -33,45 +34,49 @@ class ShareContact extends StatelessWidget {
                     "assets/images/qr/1831035087_Herman Julianto.png"),
               ),
             )),
-        Container(
+        const SizedBox(
           child: Center(
               child: Text(
             "Herman Julianto",
-            style: TextStyle(fontSize: 30),
+            style: TextStyle(
+                fontSize: 30,
+                fontFamily: "PTSerif",
+                fontWeight: FontWeight.w700),
           )),
         ),
-        SizedBox(
+        const SizedBox(
           height: 20,
         ),
-        Container(
+        const SizedBox(
           child: Center(
               child: Text(
             "+6285 888 000 555",
-            style: TextStyle(fontSize: 30),
+            style: TextStyle(fontSize: 25, fontFamily: "PTSerif"),
           )),
         ),
-        Container(
+        const SizedBox(
           child: Center(
               child: Text(
             "+628 12345 12345",
-            style: TextStyle(fontSize: 30),
+            style: TextStyle(fontSize: 25, fontFamily: "PTSerif"),
           )),
         ),
-        SizedBox(
+        const SizedBox(
           height: 20,
         ),
-        Container(
+        const SizedBox(
           child: Center(
               child: Text(
             "hmjulianto@sos.co.id",
-            style: TextStyle(fontSize: 30),
+            style: TextStyle(fontSize: 25, fontFamily: "PTSerif"),
           )),
         ),
         ElevatedButton(
             onPressed: () {
               Navigator.pop(context);
             },
-            child: Text("Kembali"))
+            style: ElevatedButton.styleFrom(),
+            child: const Text("Kembali"))
       ]),
     );
   }

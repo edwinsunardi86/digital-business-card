@@ -1,4 +1,5 @@
 import 'package:digital_business/component/my_painter.dart';
+import 'package:digital_business/data_contact.dart';
 import 'package:digital_business/share_contact.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -94,13 +95,19 @@ class _AvatarCardState extends State<AvatarCard> {
                       width: MediaQuery.of(context).size.width * 0.30,
                       height: 35,
                       child: InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const DataContact(),
+                              ));
+                        },
                         splashColor: Colors.white,
                         child: CustomPaint(
                           painter: MyPainter(),
                           child: const Center(
                             child: Text(
-                              "LIHAT KONTAK",
+                              "BAGIKAN",
                               style: TextStyle(
                                 fontSize: 13,
                                 fontFamily: "SourceSansPro",

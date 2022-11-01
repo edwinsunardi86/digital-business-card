@@ -16,7 +16,9 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: AvatarCard(),
+      theme: ThemeData(
+          scaffoldBackgroundColor: const Color.fromARGB(255, 255, 255, 255)),
+      home: const AvatarCard(),
     );
   }
 }
