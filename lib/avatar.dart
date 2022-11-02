@@ -107,7 +107,7 @@ class _AvatarCardState extends State<AvatarCard> {
                           painter: MyPainter(),
                           child: const Center(
                             child: Text(
-                              "BAGIKAN",
+                              "LIHAT CONTACT",
                               style: TextStyle(
                                 fontSize: 13,
                                 fontFamily: "SourceSansPro",
