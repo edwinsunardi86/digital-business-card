@@ -37,6 +37,7 @@ dependencies:
   webview_flutter: ^3.0.4
   flutter_contacts: ^1.1.5+1
   permission_handler: ^10.2.0
+  http: ^0.13.5
 
 dev_dependencies:
   flutter_test:
