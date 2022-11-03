@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:digital_business/API/api_data_contact.dart';
 import 'package:digital_business/component/contact_action_box.dart';
@@ -95,7 +94,7 @@ class _DataContactState extends State<DataContact> {
                                         showDialog(
                                             context: context,
                                             builder: ((context) {
-                                              return contactActionBox(
+                                              return ContactActionBox(
                                                   nama: snapshot
                                                       .data![index].nama,
                                                   company: snapshot
@@ -104,8 +103,8 @@ class _DataContactState extends State<DataContact> {
                                                       .data![index].contactHp);
                                             }));
                                       },
-                                      icon: Icon(Icons.smart_button),
-                                      label: Text("Action")),
+                                      icon: const Icon(Icons.smart_button),
+                                      label: const Text("Action")),
                                 ],
                               ),
                             ),
@@ -205,17 +204,5 @@ class _DataContactState extends State<DataContact> {
         // )
       ],
     ));
-  }
-
-  Future<PermissionStatus> _getPermission() async {
-    final PermissionStatus permission = await Permission.contacts.status;
-    if (permission != PermissionStatus.granted &&
-        permission != PermissionStatus.denied) {
-      final Map<Permission, PermissionStatus> permissionStatus =
-          await [Permission.contacts].request();
-      return permissionStatus[Permission.contacts] ?? PermissionStatus.denied;
-    } else {
-      return permission;
-    }
   }
 }
