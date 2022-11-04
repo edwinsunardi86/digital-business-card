@@ -3,8 +3,11 @@ import 'dart:io';
 import 'package:digital_business/component/custom_dialog_box.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:digital_business/API/api_delete_data_contact.dart';
+import 'package:digital_business/data_contact.dart';
+
+import 'dialog_box.dart';
 
 class ConstantsValue {
   ConstantsValue._();
@@ -13,10 +16,12 @@ class ConstantsValue {
 }
 
 class ContactActionBox extends StatelessWidget {
+  final String? id;
   final String? nama;
   final String? company;
   final String? contactHP;
-  const ContactActionBox({super.key, this.nama, this.company, this.contactHP});
+  const ContactActionBox(
+      {super.key, this.id, this.nama, this.company, this.contactHP});
 
   @override
   Widget build(BuildContext context) {
@@ -96,7 +101,102 @@ class ContactActionBox extends StatelessWidget {
                 ),
                 const SizedBox(height: 10),
                 ElevatedButton.icon(
-                    onPressed: () {},
+                    onPressed: () {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return DialogBox(
+                                title: "Hapus Data $nama",
+                                description:
+                                    "Apakah anda ingin menghapus data contact $nama?",
+                                action: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                      ElevatedButton.icon(
+                                          onPressed: () {
+                                            APIDeleteContact.deleteDataContact(
+                                                    id.toString())
+                                                .then((value) {
+                                              //print(value['contact_nama']);
+                                              showDialog(
+                                                  context: context,
+                                                  builder: ((context) =>
+                                                      DialogBox(
+                                                        title: "Perhatian!",
+                                                        description:
+                                                            // ignore: prefer_interpolation_to_compose_strings
+                                                            "${"Data kontak dengan nama " + value['contact_nama']} berhasil dihapus",
+                                                        action:
+                                                            ElevatedButton.icon(
+                                                                onPressed: () {
+                                                                  // Navigator.of(
+                                                                  //         context)
+                                                                  //     .pop();
+                                                                  Navigator.pushReplacement(
+                                                                      context,
+                                                                      MaterialPageRoute(
+                                                                          builder:
+                                                                              (context) {
+                                                                    return const DataContact();
+                                                                  }));
+                                                                },
+                                                                icon: const Icon(
+                                                                    Icons
+                                                                        .close),
+                                                                label: const Text(
+                                                                    "Tutup",
+                                                                    style: TextStyle(
+                                                                        color: Colors
+                                                                            .white,
+                                                                        fontFamily:
+                                                                            "SourceSansPro"))),
+                                                      )));
+                                            });
+                                          },
+                                          icon: const Icon(
+                                            Icons.delete,
+                                            color: Colors.white,
+                                          ),
+                                          label: const Text(
+                                            "Hapus",
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontFamily: "SourceSansPro"),
+                                          ),
+                                          style: ElevatedButton.styleFrom(
+                                              backgroundColor: Colors.red)),
+                                      ElevatedButton.icon(
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          icon: const Icon(Icons.cancel,
+                                              color: Colors.white),
+                                          label: const Text("Batal",
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontFamily: "SourceSansPro")))
+                                    ]));
+                          });
+
+                      // FutureBuilder<APIGetDataContact>(
+                      //     future: deleteDataContact(id.toString()),
+                      //     builder: (context,
+                      //         AsyncSnapshot<APIGetDataContact> snapshot) {
+                      //       if (snapshot.hasData) {
+                      //         APIGetDataContact? getDataContact = snapshot.data;
+                      //         showDialog(
+                      //             context: context,
+                      //             builder: (context) {
+                      //               return CustomDialogBox(
+                      //                   title: "Perhatian",
+                      //                   description: getDataContact!.message);
+                      //             });
+                      //       } else {
+                      //         return Text("");
+                      //       }
+                      //     });
+                    },
                     icon: const Icon(Icons.delete),
                     label: const Text("Hapus",
                         style: TextStyle(
@@ -211,18 +311,6 @@ class ContactActionBox extends StatelessWidget {
               );
             }));
       }
-    }
-  }
-
-  Future<PermissionStatus> _getPermission() async {
-    final PermissionStatus permission = await Permission.contacts.status;
-    if (permission != PermissionStatus.granted &&
-        permission != PermissionStatus.denied) {
-      final Map<Permission, PermissionStatus> permissionStatus =
-          await [Permission.contacts].request();
-      return permissionStatus[Permission.contacts] ?? PermissionStatus.denied;
-    } else {
-      return permission;
     }
   }
 }
