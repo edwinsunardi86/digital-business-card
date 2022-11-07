@@ -9,7 +9,7 @@ class APIListDataContact {
   String? contactHp;
 
   APIListDataContact({this.id, this.nama, this.company, this.contactHp});
-
+  static List<Map<String, dynamic>>? listData;
   factory APIListDataContact.createDataContact(Map<String, dynamic> json) {
     return APIListDataContact(
       id: json['contact_id'],
@@ -32,4 +32,15 @@ class APIListDataContact {
       throw "Unable to retrieve data contact";
     }
   }
+
+  // static List<Map<String, dynamic>> listDataContact() {
+  //   Map<String, dynamic>? getData;
+  //   APIListDataContact.fetchDataContact().then((value) {
+  //     getData!["nama"] = value.map((e) => e.nama);
+  //     getData["company"] = value.map((e) => e.company);
+  //     getData["contactHp"] = value.map((e) => e.contactHp);
+  //   });
+  //   listData!.add(getData!);
+  //   return listData!.toList();
+  // }
 }
