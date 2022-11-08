@@ -6,15 +6,18 @@ class APIListDataContact {
   String? id;
   String? nama;
   String? company;
+  String? kodeDial;
   String? contactHp;
 
-  APIListDataContact({this.id, this.nama, this.company, this.contactHp});
+  APIListDataContact(
+      {this.id, this.nama, this.company, this.kodeDial, this.contactHp});
   static List<Map<String, dynamic>>? listData;
   factory APIListDataContact.createDataContact(Map<String, dynamic> json) {
     return APIListDataContact(
       id: json['contact_id'],
       nama: json['contact_nama'],
       company: json['company'],
+      kodeDial: json['kode_dial'],
       contactHp: json['contact_hp'],
     );
   }

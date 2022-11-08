@@ -31,7 +31,7 @@ class ShareContact extends StatelessWidget {
               child: Image(
                 width: MediaQuery.of(context).size.width * 0.60,
                 image: const AssetImage(
-                    "assets/images/qr/1831035087_Herman Julianto.png"),
+                    "assets/images/qr/1945061740_Herman_Julianto.png"),
               ),
             )),
         const SizedBox(
