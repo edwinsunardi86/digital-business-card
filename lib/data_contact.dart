@@ -403,12 +403,13 @@ class _DataContactState extends State<DataContact> {
   }
 
   openWhatsapp(context, String number) async {
-    var whatsappUrl = "https://api.whatsapp.com/send?phone=" + number;
+    //var whatsappUrl = "https://api.whatsapp.com/send?phone=" + number;
+    var whatsappUrl = "https://wa.me/$number";
 
     if (Platform.isIOS) {
       if (await canLaunchUrl(Uri.parse(whatsappUrl))) {
         await launchUrl(Uri.parse(whatsappUrl),
-            mode: LaunchMode.platformDefault);
+            mode: LaunchMode.externalNonBrowserApplication);
       } else {
         return showDialog(
             context: context,
@@ -423,7 +424,7 @@ class _DataContactState extends State<DataContact> {
     } else {
       if (await canLaunchUrl(Uri.parse(whatsappUrl))) {
         await launchUrl(Uri.parse(whatsappUrl),
-            mode: LaunchMode.platformDefault);
+            mode: LaunchMode.externalNonBrowserApplication);
       } else {
         showDialog(
             context: context,
