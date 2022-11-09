@@ -1,3 +1,4 @@
+import 'package:digital_business/API/api_login_user.dart';
 import 'package:flutter/material.dart';
 import 'package:digital_business/component/custom_shape.dart';
 import 'package:digital_business/component/text_form_field.dart';
@@ -10,6 +11,7 @@ class LoginApps extends StatefulWidget {
 }
 
 class _LoginAppsState extends State<LoginApps> {
+  ApiLogin? apiLogin = ApiLogin();
   final _formKey = GlobalKey<FormState>();
   TextEditingController username = TextEditingController();
   TextEditingController password = TextEditingController();
@@ -51,12 +53,22 @@ class _LoginAppsState extends State<LoginApps> {
                         child: TextFormFieldVarian1(
                             labelText: "Username",
                             controller: username,
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'Mohon input username anda';
+                              }
+                            },
                             prefixIcon: const Icon(Icons.person),
                             obscureText: false)),
                     Container(
                         margin: const EdgeInsets.all(25),
                         child: TextFormFieldVarian1(
                             labelText: "Password",
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'Mohon input password anda';
+                              }
+                            },
                             controller: password,
                             prefixIcon: const Icon(Icons.password),
                             obscureText: true)),
@@ -73,7 +85,16 @@ class _LoginAppsState extends State<LoginApps> {
                       width: 200,
                       height: 50,
                       child: InkWell(
-                        onTap: () {},
+                        onTap: () async {
+                          if (_formKey.currentState!.validate()) {
+                            try {
+                              var req = await ApiLogin
+                                  .fetchNotificationAuthentication(
+                                      username.text, password.text);
+                              if (req.status.toString() == "success") {}
+                            } on Exception {}
+                          }
+                        },
                         borderRadius: BorderRadius.circular(25),
                         splashColor: Colors.white,
                         child: Row(
@@ -95,20 +116,22 @@ class _LoginAppsState extends State<LoginApps> {
                   ],
                 ),
               ),
-              ClipPath(
-                clipper: CustomShape(),
-                child: Container(
-                  decoration: const BoxDecoration(
-                      gradient: LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          colors: [
-                        Color.fromARGB(255, 173, 12, 0),
-                        Color.fromARGB(255, 124, 3, 3)
-                      ])),
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height * 0.15,
-                  child: null,
+              Expanded(
+                child: ClipPath(
+                  clipper: CustomShape(),
+                  child: Container(
+                    decoration: const BoxDecoration(
+                        gradient: LinearGradient(
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                            colors: [
+                          Color.fromARGB(255, 173, 12, 0),
+                          Color.fromARGB(255, 124, 3, 3)
+                        ])),
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height * 0.35,
+                    child: null,
+                  ),
                 ),
               ),
             ],

@@ -7,18 +7,21 @@ class TextFormFieldVarian1 extends StatelessWidget {
   final bool? obscureText;
   final String? labelText;
   final Icon? prefixIcon;
+  final String? Function(String?)? validator;
   const TextFormFieldVarian1(
       {super.key,
       this.controller,
       this.obscureText,
       this.labelText,
-      this.prefixIcon});
+      this.prefixIcon,
+      this.validator});
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
       obscureText: obscureText!,
+      validator: validator,
       decoration: InputDecoration(
           labelText: labelText,
           prefixIcon: prefixIcon,

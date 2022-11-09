@@ -19,7 +19,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
         theme: ThemeData(
             scaffoldBackgroundColor: const Color.fromARGB(255, 255, 255, 255)),
-        // home: const LoginApps(),
-        home: const AvatarCard());
+        home: const LoginApps());
+    //home: const AvatarCard());
   }
 }
