@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 class TextFormFieldVarian1 extends StatelessWidget {
   final TextEditingController? controller;
@@ -8,13 +6,17 @@ class TextFormFieldVarian1 extends StatelessWidget {
   final String? labelText;
   final Icon? prefixIcon;
   final String? Function(String?)? validator;
+  final bool? autofocus;
+  final FocusNode? focusNode;
   const TextFormFieldVarian1(
       {super.key,
       this.controller,
       this.obscureText,
       this.labelText,
       this.prefixIcon,
-      this.validator});
+      this.validator,
+      this.autofocus,
+      this.focusNode});
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +24,8 @@ class TextFormFieldVarian1 extends StatelessWidget {
       controller: controller,
       obscureText: obscureText!,
       validator: validator,
+      autofocus: autofocus ?? false,
+      focusNode: focusNode,
       decoration: InputDecoration(
           labelText: labelText,
           prefixIcon: prefixIcon,

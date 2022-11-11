@@ -12,7 +12,7 @@
         android:name="${applicationName}"
         android:hardwareAccelerated="true"
         android:usesCleartextTraffic="true"
-        android:icon="@mipmap/sos_logo"
+        android:icon="@mipmap/icon_sos"
         >
         <activity
             android:name=".MainActivity"

@@ -28,7 +28,6 @@ class _DataContactState extends State<DataContact> {
       myData = data;
       unFilteredData = myData;
     });
-    print(myData.length);
     return data;
   }
 
@@ -85,7 +84,7 @@ class _DataContactState extends State<DataContact> {
               decoration: InputDecoration(
                   labelText: "Search",
                   hintText: "Search",
-                  prefixIcon: Icon(Icons.filter, color: eventColorTextField),
+                  prefixIcon: Icon(Icons.person, color: eventColorTextField),
                   focusedBorder: OutlineInputBorder(
                       borderSide:
                           const BorderSide(width: 0.5, color: Colors.blue),
@@ -144,23 +143,28 @@ class _DataContactState extends State<DataContact> {
     return Card(
       elevation: 5,
       child: Container(
-        margin: const EdgeInsets.only(bottom: 10),
+        margin: const EdgeInsets.only(top: 10, bottom: 10),
         child: Column(
           children: [
             ListTile(
-              title: Text(
-                company,
-                style: const TextStyle(
-                    fontFamily: "SourceSansPro",
-                    fontStyle: FontStyle.italic,
-                    fontSize: 15),
-              ),
-              leading: Text(
-                nama,
-                style: const TextStyle(
-                    fontFamily: "SourceSansPro",
-                    fontWeight: FontWeight.bold,
-                    fontSize: 17),
+              leading: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    nama,
+                    style: const TextStyle(
+                        fontFamily: "SourceSansPro",
+                        fontWeight: FontWeight.bold,
+                        fontSize: 17),
+                  ),
+                  Text(
+                    company,
+                    style: const TextStyle(
+                        fontFamily: "SourceSansPro",
+                        // fontStyle: FontStyle.italic,
+                        fontSize: 15),
+                  ),
+                ],
               ),
               trailing: Text(
                 kodeDial + contactHp,
@@ -398,7 +402,7 @@ class _DataContactState extends State<DataContact> {
   }
 
   openphoneCall(context, String number) async {
-    var urlCall = "tel://+$number";
+    var urlCall = "tel:+$number";
     await launchUrl(Uri.parse(urlCall));
   }
 
@@ -437,11 +441,6 @@ class _DataContactState extends State<DataContact> {
             }));
       }
     }
-
-    Widget(
-      snapshot,
-      index,
-    ) {}
   }
 
   // void searchdata() {

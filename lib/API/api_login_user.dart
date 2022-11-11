@@ -1,25 +1,38 @@
 import 'dart:convert';
-
 import 'package:http/http.dart' as http;
 
 class ApiLogin {
   String? message;
   String? status;
+  String? kartuId;
   String? token;
-  ApiLogin({this.message, this.status, this.token});
-  factory ApiLogin.createNotificationAuthentication(Map<String, String> json) {
+
+  ApiLogin({
+    this.message,
+    this.status,
+    this.kartuId,
+    this.token,
+  });
+  factory ApiLogin.createNotificationAuthentication(Map<String, dynamic> json) {
     return ApiLogin(
-        message: json['message'], status: json['status'], token: json['token']);
+      message: json['message'],
+      status: json['status'],
+      kartuId: json['kartu_id'],
+      token: json['token'],
+    );
   }
   static Future<ApiLogin> fetchNotificationAuthentication(
       String username, String password) async {
-    String apiUrl = "http://203.176.177.251/dnc/API/login_user.http";
+    String apiUrl =
+        "http://203.176.177.251/dnc/API/get_authentication_login.php";
     var response = await http.post(Uri.parse(apiUrl),
         headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8'
+          'Content-type': 'application/json',
         },
-        body: jsonEncode(
-            <String, dynamic>{'username': username, 'password': password}));
+        body: json.encode(<String, String>{
+          'username': username.toString(),
+          'password': password.toString()
+        }));
     if (response.statusCode == 200) {
       var jsonObject = jsonDecode(response.body);
       return ApiLogin.createNotificationAuthentication(jsonObject);

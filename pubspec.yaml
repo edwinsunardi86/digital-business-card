@@ -39,6 +39,8 @@ dependencies:
   permission_handler: ^10.2.0
   http: ^0.13.5
   url_launcher: ^6.1.6
+  shared_preferences: ^2.0.15
+  cached_network_image: ^3.2.2
 
 dev_dependencies:
   flutter_test:
@@ -71,7 +73,6 @@ flutter:
     - assets/images/background_avatar.png
     - assets/images/2021254138_FOTO PAK HJ_PNG.png
     - assets/images/Logos.png
-    - assets/images/Logo_SOS.png
     - assets/images/qr/1945061740_Herman_Julianto.png
     - assets/images/icon_info.png
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -111,6 +112,9 @@ flutter:
             style: italic
           - asset: assets/fonts/PTSerif/PTSerif-Bold.ttf
             weight: 700
+      - family: Segoeui
+        fonts:
+         - asset: assets/fonts/Segoeui/segoeui.ttf
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
