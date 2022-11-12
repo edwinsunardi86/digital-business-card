@@ -8,6 +8,7 @@ import 'package:digital_business/API/api_list_data_contact.dart';
 import 'package:digital_business/component/contact_action_box.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:digital_business/component/custom_dialog_box.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class DataContact extends StatefulWidget {
@@ -22,25 +23,24 @@ class _DataContactState extends State<DataContact> {
   late List<APIListDataContact> unFilteredData = [];
   late String textData = "";
   TextEditingController filterTextData = TextEditingController();
-  Future<List<APIListDataContact>> loadDataContact() async {
-    List<APIListDataContact> data = await APIListDataContact.fetchDataContact();
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+  String? _username;
+  void initial() async {
+    final SharedPreferences pref = await _prefs;
+    String username = pref.getString("username").toString();
     setState(() {
-      myData = data;
-      unFilteredData = myData;
+      _username = username;
     });
-    return data;
   }
 
   @override
   void initState() {
-    super.initState();
-    loadDataContact();
+    super.initState;
+    initial();
   }
 
   @override
   Widget build(BuildContext context) {
-    // print(APIListDataContact.fetchDataContact()
-    //     .then((value) => value.map((e) => e.nama).toString()));
     Color? eventColorTextField;
     return Scaffold(
         body: Column(
@@ -98,7 +98,7 @@ class _DataContactState extends State<DataContact> {
         ),
         FutureBuilder(
             // future: APIListDataContact.fetchDataContact(),
-            future: APIListDataContact.fetchDataContact(),
+            future: APIListDataContact.fetchDataContact(_username.toString()),
             builder:
                 (context, AsyncSnapshot<List<APIListDataContact>> snapshot) {
               if (snapshot.hasData) {

@@ -22,9 +22,10 @@ class APIListDataContact {
     );
   }
 
-  static Future<List<APIListDataContact>> fetchDataContact() async {
+  static Future<List<APIListDataContact>> fetchDataContact(
+      String username) async {
     String urlAPI =
-        "http://203.176.177.251/dnc/API/get_contact_per_username.php";
+        "http://203.176.177.251/dnc/API/get_contact_per_username.php?username=$username";
     var response = await http.get(Uri.parse(urlAPI));
     if (response.statusCode == 200) {
       List<dynamic> body = jsonDecode(response.body);
