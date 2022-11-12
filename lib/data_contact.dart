@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:digital_business/API/api_delete_data_contact.dart';
 import 'package:digital_business/API/api_update_data_contact.dart';
 import 'package:digital_business/component/dialog_box.dart';
+import 'package:digital_business/sidebar.dart';
 import 'package:flutter/material.dart';
 import 'package:digital_business/API/api_list_data_contact.dart';
 import 'package:digital_business/component/contact_action_box.dart';
@@ -25,11 +26,14 @@ class _DataContactState extends State<DataContact> {
   TextEditingController filterTextData = TextEditingController();
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   String? _username;
+  String? _kartuId;
   void initial() async {
     final SharedPreferences pref = await _prefs;
     String username = pref.getString("username").toString();
+    String kartuId = pref.getString("kartuId").toString();
     setState(() {
       _username = username;
+      _kartuId = kartuId;
     });
   }
 
@@ -43,99 +47,110 @@ class _DataContactState extends State<DataContact> {
   Widget build(BuildContext context) {
     Color? eventColorTextField;
     return Scaffold(
-        body: Column(
-      children: [
-        Container(
-            margin: const EdgeInsets.all(30),
-            child: Center(
-              child: Image(
-                width: MediaQuery.of(context).size.width * 0.30,
-                image: const AssetImage("assets/images/Logos.png"),
+        drawer: Sidebar(kartuId: _kartuId),
+        appBar: AppBar(
+          elevation: 0,
+          backgroundColor: Colors.transparent,
+          iconTheme: const IconThemeData(color: Colors.black),
+        ),
+        body: SafeArea(
+          child: Column(
+            children: [
+              Container(
+                  margin: const EdgeInsets.all(30),
+                  child: Center(
+                    child: Image(
+                      width: MediaQuery.of(context).size.width * 0.30,
+                      image: const AssetImage("assets/images/Logos.png"),
+                    ),
+                  )),
+              Container(
+                margin: const EdgeInsets.only(top: 15, bottom: 30),
+                child: const Text(
+                  "Data Contact",
+                  style: TextStyle(
+                      fontFamily: "SourceSansPro",
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold),
+                ),
               ),
-            )),
-        Container(
-          margin: const EdgeInsets.only(top: 15, bottom: 30),
-          child: const Text(
-            "Data Contact",
-            style: TextStyle(
-                fontFamily: "SourceSansPro",
-                fontSize: 30,
-                fontWeight: FontWeight.bold),
-          ),
-        ),
-        Container(
-          margin: const EdgeInsets.only(left: 20, right: 20),
-          // height: 40,
-          child: Focus(
-            onFocusChange: ((hasFocus) {
-              if (hasFocus == true) {
-                eventColorTextField = Colors.blue;
-              } else {
-                eventColorTextField = Colors.grey;
-              }
-            }),
-            child: TextField(
-              onChanged: (String filterTextData) {
-                setState(() {
-                  textData = filterTextData.toString();
-                });
-              },
-              controller: filterTextData,
-              decoration: InputDecoration(
-                  labelText: "Search",
-                  hintText: "Search",
-                  prefixIcon: Icon(Icons.person, color: eventColorTextField),
-                  focusedBorder: OutlineInputBorder(
-                      borderSide:
-                          const BorderSide(width: 0.5, color: Colors.blue),
-                      borderRadius: BorderRadius.circular(5)),
-                  enabledBorder: OutlineInputBorder(
-                      borderSide:
-                          const BorderSide(width: 0.5, color: Colors.grey),
-                      borderRadius: BorderRadius.circular(5))),
-            ),
-          ),
-        ),
-        FutureBuilder(
-            // future: APIListDataContact.fetchDataContact(),
-            future: APIListDataContact.fetchDataContact(_username.toString()),
-            builder:
-                (context, AsyncSnapshot<List<APIListDataContact>> snapshot) {
-              if (snapshot.hasData) {
-                //List<APIListDataContact>? dataContact = myData;
-                return Expanded(
-                  child: ListView.builder(
-                      itemCount: snapshot.data!.length,
-                      shrinkWrap: true,
-                      physics: const ScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        String id = snapshot.data![index].id.toString();
-                        String nama = snapshot.data![index].nama.toString();
-                        String company =
-                            snapshot.data![index].company.toString();
-                        String kodeDial =
-                            snapshot.data![index].kodeDial.toString();
-                        String contactHp =
-                            snapshot.data![index].contactHp.toString();
+              Container(
+                margin: const EdgeInsets.only(left: 20, right: 20),
+                // height: 40,
+                child: Focus(
+                  onFocusChange: ((hasFocus) {
+                    if (hasFocus == true) {
+                      eventColorTextField = Colors.blue;
+                    } else {
+                      eventColorTextField = Colors.grey;
+                    }
+                  }),
+                  child: TextField(
+                    onChanged: (String filterTextData) {
+                      setState(() {
+                        textData = filterTextData.toString();
+                      });
+                    },
+                    controller: filterTextData,
+                    decoration: InputDecoration(
+                        labelText: "Search",
+                        hintText: "Search",
+                        prefixIcon:
+                            Icon(Icons.person, color: eventColorTextField),
+                        focusedBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(
+                                width: 0.5, color: Colors.blue),
+                            borderRadius: BorderRadius.circular(5)),
+                        enabledBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(
+                                width: 0.5, color: Colors.grey),
+                            borderRadius: BorderRadius.circular(5))),
+                  ),
+                ),
+              ),
+              FutureBuilder(
+                  // future: APIListDataContact.fetchDataContact(),
+                  future:
+                      APIListDataContact.fetchDataContact(_username.toString()),
+                  builder: (context,
+                      AsyncSnapshot<List<APIListDataContact>> snapshot) {
+                    if (snapshot.hasData) {
+                      //List<APIListDataContact>? dataContact = myData;
+                      return Expanded(
+                        child: ListView.builder(
+                            itemCount: snapshot.data!.length,
+                            shrinkWrap: true,
+                            physics: const ScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              String id = snapshot.data![index].id.toString();
+                              String nama =
+                                  snapshot.data![index].nama.toString();
+                              String company =
+                                  snapshot.data![index].company.toString();
+                              String kodeDial =
+                                  snapshot.data![index].kodeDial.toString();
+                              String contactHp =
+                                  snapshot.data![index].contactHp.toString();
 
-                        if (nama
-                            .contains(RegExp(textData, caseSensitive: false))) {
-                          return cardContact(
-                              company, nama, kodeDial, contactHp, context, id);
-                        } else if (filterTextData.text == "") {
-                          return cardContact(
-                              company, nama, kodeDial, contactHp, context, id);
-                        } else {
-                          return Card();
-                        }
-                      }),
-                );
-              } else {
-                return Text("");
-              }
-            }),
-      ],
-    ));
+                              if (nama.contains(
+                                  RegExp(textData, caseSensitive: false))) {
+                                return cardContact(company, nama, kodeDial,
+                                    contactHp, context, id);
+                              } else if (filterTextData.text == "") {
+                                return cardContact(company, nama, kodeDial,
+                                    contactHp, context, id);
+                              } else {
+                                return Card();
+                              }
+                            }),
+                      );
+                    } else {
+                      return Text("");
+                    }
+                  }),
+            ],
+          ),
+        ));
   }
 
   Widget cardContact(String company, String nama, String kodeDial,

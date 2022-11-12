@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:digital_business/API/url_static.dart';
 import 'package:http/http.dart' as http;
 
 class APIGetDataContact {
@@ -20,7 +21,7 @@ class APIGetDataContact {
         contactHp: json['contactHp']);
   }
   static Future<APIGetDataContact> fetchDataContact(String id) async {
-    String urlAPI = "http://203.176.177.251/dnc/API/get_contact.php?id=$id";
+    String urlAPI = "${UrlAPIStatic.urlAPI()}dnc/API/get_contact.php?id=$id";
     var response = await http.get(Uri.parse(urlAPI));
     if (response.statusCode == 200) {
       var jsonObject = json.decode(response.body);

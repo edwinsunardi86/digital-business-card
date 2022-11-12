@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:digital_business/API/url_static.dart';
 import 'package:http/http.dart' as http;
 
 class APIDeleteContact {
@@ -10,7 +11,7 @@ class APIDeleteContact {
     return APIDeleteContact(message: json['message'], status: json['status']);
   }
   static Future<Map<String, dynamic>> deleteDataContact(String id) async {
-    String apiUrlGet = "http://203.176.177.251/dnc/API/get_contact.php?id=$id";
+    String apiUrlGet = "${UrlAPIStatic.urlAPI()}dnc/API/get_contact.php?id=$id";
     final http.Response resDataContact = await http.get(Uri.parse(apiUrlGet));
     Map<String, dynamic> body = jsonDecode(resDataContact.body);
     // print(body);
@@ -19,7 +20,7 @@ class APIDeleteContact {
     //return body;
     if (resDataContact.statusCode == 200) {
       String apiUrlDelete =
-          "http://203.176.177.251/dnc/API/delete_contact.php?id=$id";
+          "${UrlAPIStatic.urlAPI()}dnc/API/delete_contact.php?id=$id";
       await http.delete(Uri.parse(apiUrlDelete), headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8'
       });

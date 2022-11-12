@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:digital_business/API/url_static.dart';
 import 'package:http/http.dart' as http;
 
 class ApiLogin {
@@ -24,7 +25,7 @@ class ApiLogin {
   static Future<ApiLogin> fetchNotificationAuthentication(
       String username, String password) async {
     String apiUrl =
-        "http://203.176.177.251/dnc/API/get_authentication_login.php";
+        "${UrlAPIStatic.urlAPI()}dnc/API/get_authentication_login.php";
     var response = await http.post(Uri.parse(apiUrl),
         headers: <String, String>{
           'Content-type': 'application/json',

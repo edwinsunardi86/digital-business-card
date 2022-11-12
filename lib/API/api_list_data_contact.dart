@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:digital_business/API/url_static.dart';
 import 'package:http/http.dart' as http;
 
 class APIListDataContact {
@@ -25,7 +26,7 @@ class APIListDataContact {
   static Future<List<APIListDataContact>> fetchDataContact(
       String username) async {
     String urlAPI =
-        "http://203.176.177.251/dnc/API/get_contact_per_username.php?username=$username";
+        "${UrlAPIStatic.urlAPI()}dnc/API/get_contact_per_username.php?username=$username";
     var response = await http.get(Uri.parse(urlAPI));
     if (response.statusCode == 200) {
       List<dynamic> body = jsonDecode(response.body);
@@ -36,15 +37,4 @@ class APIListDataContact {
       throw "Unable to retrieve data contact";
     }
   }
-
-  // static List<Map<String, dynamic>> listDataContact() {
-  //   Map<String, dynamic>? getData;
-  //   APIListDataContact.fetchDataContact().then((value) {
-  //     getData!["nama"] = value.map((e) => e.nama);
-  //     getData["company"] = value.map((e) => e.company);
-  //     getData["contactHp"] = value.map((e) => e.contactHp);
-  //   });
-  //   listData!.add(getData!);
-  //   return listData!.toList();
-  // }
 }

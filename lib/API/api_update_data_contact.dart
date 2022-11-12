@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:digital_business/API/url_static.dart';
 import 'package:http/http.dart' as http;
 
 class APIUpdateContact {
@@ -12,11 +13,11 @@ class APIUpdateContact {
   static Future<Map<String, dynamic>> updateHiddenContact(
       String contactId) async {
     String apiUrlGet =
-        "http://203.176.177.251/dnc/API/get_contact.php?id=$contactId";
+        "${UrlAPIStatic.urlAPI()}dnc/API/get_contact.php?id=$contactId";
     final http.Response resDataContact = await http.get(Uri.parse(apiUrlGet));
     Map<String, dynamic> body = jsonDecode(resDataContact.body);
     String apiUrlUpdate =
-        "http://203.176.177.251/dnc/API/update_contact.php?id=$contactId";
+        "${UrlAPIStatic.urlAPI()}dnc/API/update_contact.php?id=$contactId";
     await http.put(Uri.parse(apiUrlUpdate),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8'

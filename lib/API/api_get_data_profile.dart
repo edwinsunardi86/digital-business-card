@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:digital_business/API/url_static.dart';
 import 'package:http/http.dart' as http;
 
 class APIGetDataProfile {
@@ -35,7 +36,7 @@ class APIGetDataProfile {
 
   static Future<APIGetDataProfile> fetchDataProfile(kartuId) async {
     String apiUrl =
-        "http://203.176.177.251/dnc/API/get_profile_user.php?kartu_id=$kartuId";
+        "${UrlAPIStatic.urlAPI()}dnc/API/get_profile_user.php?kartu_id=$kartuId";
     var response = await http.get(Uri.parse(apiUrl));
     if (response.statusCode == 200) {
       var jsonObject = jsonDecode(response.body);

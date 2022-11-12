@@ -47,29 +47,29 @@ class _AvatarCardState extends State<AvatarCard> {
       DeviceOrientation.portraitDown,
     ]);
 
-    return Container(
-      decoration: const BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage("assets/images/background_avatar.png"),
-              fit: BoxFit.fill)),
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        backgroundColor: Colors.transparent,
-        drawer: Sidebar(
-          kartuId: _kartuId,
-        ),
-        appBar: AppBar(
-          elevation: 0,
+    return SafeArea(
+      child: Container(
+        decoration: const BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage("assets/images/background_avatar.png"),
+                fit: BoxFit.fill)),
+        child: Scaffold(
+          resizeToAvoidBottomInset: false,
           backgroundColor: Colors.transparent,
-        ),
-        body: SafeArea(
-          child: Stack(
+          drawer: Sidebar(
+            kartuId: _kartuId,
+          ),
+          appBar: AppBar(
+            elevation: 0,
+            backgroundColor: Colors.transparent,
+          ),
+          body: Stack(
             children: [
               Column(
                 children: [
                   Container(
                     margin: EdgeInsets.only(
-                        top: MediaQuery.of(context).size.height * 0.22,
+                        top: MediaQuery.of(context).size.height * 0.15,
                         left: MediaQuery.of(context).size.width * 0.15,
                         right: MediaQuery.of(context).size.width * 0.15),
                     width: MediaQuery.of(context).size.width * 0.7,
