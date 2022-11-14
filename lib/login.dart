@@ -92,7 +92,7 @@ class _LoginAppsState extends State<LoginApps> {
                               return null;
                             },
                             controller: password,
-                            prefixIcon: const Icon(Icons.password),
+                            prefixIcon: const Icon(Icons.key),
                             obscureText: true)),
                     Ink(
                       decoration: const BoxDecoration(

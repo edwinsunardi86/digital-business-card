@@ -1,6 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:digital_business/API/api_get_data_profile.dart';
+import 'package:digital_business/API/url_static.dart';
 import 'package:digital_business/component/my_painter.dart';
+import 'package:digital_business/component/shimmer.dart';
+import 'package:digital_business/component/shimmer_loading.dart';
+// import 'package:shimmer/shimmer.dart';
 import 'package:digital_business/data_contact.dart';
 import 'package:digital_business/share_contact.dart';
 import 'package:digital_business/sidebar.dart';
@@ -20,6 +24,7 @@ class _AvatarCardState extends State<AvatarCard> {
   String? _kartuFoto;
   String? _kartuNama;
   String? _kartuJabatan;
+
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   void getProfil() async {
     final SharedPreferences pref = await _prefs;
@@ -42,6 +47,21 @@ class _AvatarCardState extends State<AvatarCard> {
 
   @override
   Widget build(BuildContext context) {
+    const shimmerGradient = LinearGradient(
+      colors: [
+        Color(0xFFEBEBF4),
+        Color.fromARGB(255, 194, 193, 193),
+        Color(0xFFEBEBF4),
+      ],
+      stops: [
+        0.1,
+        0.3,
+        0.4,
+      ],
+      begin: Alignment(-1.0, -0.3),
+      end: Alignment(1.0, 0.3),
+      tileMode: TileMode.clamp,
+    );
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
@@ -52,7 +72,7 @@ class _AvatarCardState extends State<AvatarCard> {
         decoration: const BoxDecoration(
             image: DecorationImage(
                 image: AssetImage("assets/images/background_avatar.png"),
-                fit: BoxFit.fill)),
+                fit: BoxFit.cover)),
         child: Scaffold(
           resizeToAvoidBottomInset: false,
           backgroundColor: Colors.transparent,
@@ -72,31 +92,32 @@ class _AvatarCardState extends State<AvatarCard> {
                         top: MediaQuery.of(context).size.height * 0.15,
                         left: MediaQuery.of(context).size.width * 0.15,
                         right: MediaQuery.of(context).size.width * 0.15),
-                    width: MediaQuery.of(context).size.width * 0.7,
-                    height: MediaQuery.of(context).size.width * 0.7,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(25),
-                      child: (_kartuFoto != null)
-                          ? CachedNetworkImage(
-                              width: 60,
-                              fit: BoxFit.cover,
-                              imageUrl:
-                                  "http://203.176.177.251/dnc/dash/pasfoto/$_kartuFoto",
-                              progressIndicatorBuilder: (_, url, download) {
-                                if (download.progress != null) {
-                                  final percent = download.progress! * 100;
-                                  return Text("$percent% done loading");
-                                } else {
-                                  return const CircularProgressIndicator(
-                                    color: Colors.white,
-                                  );
-                                }
-                              },
-                            )
-                          : const Image(
-                              image: NetworkImage(
-                                  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScRXe2s0YvgLGalBPBxnFALHraKQwImy3Y7CpaUxA&s")),
-                    ),
+                    child: (_kartuFoto == null)
+                        ? Container(
+                            width: MediaQuery.of(context).size.width * 0.55,
+                            height: MediaQuery.of(context).size.width * 0.55,
+                            decoration: const BoxDecoration(
+                                shape: BoxShape.circle, color: Colors.white),
+                            child: const Image(
+                                image: AssetImage(
+                                    "assets/images/Avatar-Profile.png")),
+                          )
+                        : CachedNetworkImage(
+                            width: MediaQuery.of(context).size.width * 0.7,
+                            fit: BoxFit.cover,
+                            imageUrl:
+                                "${UrlAPIStatic.urlAPI()}dnc/dash/pasfoto/$_kartuFoto",
+                            progressIndicatorBuilder: (_, url, download) {
+                              if (download.progress != null) {
+                                final percent = download.progress! * 100;
+                                return Text("$percent% done loading");
+                              } else {
+                                return const CircularProgressIndicator(
+                                  color: Colors.white,
+                                );
+                              }
+                            },
+                          ),
                   ),
                   const SizedBox(
                     height: 10,

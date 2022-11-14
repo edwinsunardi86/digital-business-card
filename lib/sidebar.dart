@@ -1,5 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:digital_business/API/api_get_data_profile.dart';
+import 'package:digital_business/API/url_static.dart';
+import 'package:digital_business/avatar.dart';
+import 'package:digital_business/change_password.dart';
 import 'package:digital_business/component/dialog_box.dart';
 import 'package:digital_business/data_contact.dart';
 import 'package:digital_business/login.dart';
@@ -44,17 +47,11 @@ class _SidebarState extends State<Sidebar> {
   Widget build(BuildContext context) {
     bool? isSelected = false;
     return Drawer(
+        width: 200,
         elevation: 5,
-        backgroundColor: Colors.transparent,
+        backgroundColor: const Color.fromARGB(200, 255, 255, 255),
         child: Container(
-          decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [
-                Color.fromARGB(255, 173, 12, 0),
-                Color.fromARGB(255, 124, 3, 3)
-              ])),
+          decoration: const BoxDecoration(),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -75,178 +72,184 @@ class _SidebarState extends State<Sidebar> {
                             ])),
                         child: Column(children: [
                           ClipRRect(
-                            child: (_foto != null)
-                                ? CachedNetworkImage(
-                                    width: 100,
-                                    fit: BoxFit.cover,
-                                    imageUrl:
-                                        "http://203.176.177.251/dnc/dash/pasfoto/$_foto",
-                                    progressIndicatorBuilder:
-                                        (_, url, download) {
-                                      if (download.progress != null) {
-                                        final percent =
-                                            download.progress! * 100;
-                                        return Text("$percent% done loading");
-                                      } else {
-                                        return const CircularProgressIndicator(
-                                          color: Colors.white,
-                                        );
-                                      }
-                                    },
-                                  )
-                                : const Image(
-                                    width: 100,
-                                    image: NetworkImage(
-                                        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScRXe2s0YvgLGalBPBxnFALHraKQwImy3Y7CpaUxA&s")),
-                          ),
+                              child: (_foto != null)
+                                  ? CachedNetworkImage(
+                                      width: 100,
+                                      fit: BoxFit.cover,
+                                      imageUrl:
+                                          "${UrlAPIStatic.urlAPI()}dnc/dash/pasfoto/$_foto",
+                                      progressIndicatorBuilder:
+                                          (_, url, download) {
+                                        if (download.progress != null) {
+                                          final percent =
+                                              download.progress! * 100;
+                                          return Text("$percent% done loading");
+                                        } else {
+                                          return const CircularProgressIndicator(
+                                            color: Colors.white,
+                                          );
+                                        }
+                                      },
+                                    )
+                                  : Container(
+                                      width: 100,
+                                      decoration: const BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: Colors.white),
+                                      child: const Image(
+                                          image: AssetImage(
+                                              "assets/images/Avatar-Profile.png")),
+                                    )),
                           (_fullname != "")
                               ? Text(_fullname.toString(),
                                   style: const TextStyle(
-                                      fontFamily: "SourceSansPro",
-                                      fontSize: 20,
+                                      fontFamily: "Segoeui",
+                                      fontSize: 17,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white))
                               : Text(""),
                           (_jabatan != "")
                               ? Text(_jabatan.toString(),
                                   style: const TextStyle(
-                                      fontFamily: "SourceSansPro",
-                                      fontSize: 15,
+                                      fontFamily: "Segoeui",
+                                      fontSize: 11,
                                       color: Colors.white))
                               : Text(""),
                           (_email != "")
                               ? Text(_email.toString(),
                                   style: const TextStyle(
-                                      fontFamily: "SourceSansPro",
-                                      fontSize: 15,
+                                      fontFamily: "Segoeui",
+                                      fontSize: 11,
                                       color: Colors.white))
                               : Text(""),
                         ])),
                   ),
-                  const Divider(
-                    thickness: 5,
-                  ),
-                  Material(
-                    elevation: 2,
-                    child: ListTile(
-                        tileColor: (isSelected == true)
-                            ? Colors.white
-                            : const Color.fromARGB(255, 189, 27, 16),
-                        onTap: () {
-                          setState(() {
-                            isSelected = true;
-                          });
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (_) {
-                            return ShareContact(kartuId: _kartuId.toString());
-                          }));
-                        },
-                        title: const Text(
-                          "Bagikan",
-                          style: TextStyle(
-                              fontFamily: "SourceSansPro",
-                              fontSize: 25,
-                              color: Colors.white),
-                        )),
-                  ),
-                  const Divider(
-                    thickness: 5,
-                  ),
-                  Material(
-                    elevation: 2,
-                    child: ListTile(
-                        tileColor: (isSelected == true)
-                            ? Colors.white
-                            : const Color.fromARGB(255, 189, 27, 16),
-                        onTap: () {
-                          setState(() {
-                            isSelected = true;
-                          });
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (_) {
-                            return const DataContact();
-                          }));
-                        },
-                        title: const Text(
-                          "Data Contact",
-                          style: TextStyle(
-                              fontFamily: "SourceSansPro",
-                              fontSize: 25,
-                              color: Colors.white),
-                        )),
-                  )
+                  const SizedBox(height: 10),
+                  // ListTile(
+                  //     onTap: () {
+                  //       setState(() {
+                  //         isSelected = true;
+                  //       });
+                  //       Navigator.push(context, MaterialPageRoute(builder: (_) {
+                  //         return const AvatarCard();
+                  //       }));
+                  //     },
+                  //     title: Row(
+                  //       children: const [
+                  //         Icon(Icons.person),
+                  //         SizedBox(width: 5),
+                  //         Text(
+                  //           "Ubah Photo Profil",
+                  //           style: TextStyle(
+                  //             fontFamily: "Segoeui",
+                  //             fontSize: 15,
+                  //           ),
+                  //         ),
+                  //       ],
+                  //     )),
+                  ListTile(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: ((context) =>
+                                    const ChangePassword())));
+                        setState(() {
+                          isSelected = true;
+                        });
+                      },
+                      title: Row(
+                        children: const [
+                          Icon(Icons.key),
+                          SizedBox(width: 5),
+                          Text(
+                            "Ubah Password",
+                            style: TextStyle(
+                              fontFamily: "Segoeui",
+                              fontSize: 15,
+                            ),
+                          ),
+                        ],
+                      )),
                 ],
               ),
-              Material(
-                elevation: 2,
-                child: ListTile(
-                    tileColor: (isSelected == true)
-                        ? Colors.white
-                        : const Color.fromARGB(255, 189, 27, 16),
-                    onTap: () {
-                      showDialog(
-                          context: context,
-                          builder: (_) {
-                            return DialogBox(
-                                title: "Perhatian",
-                                description:
-                                    "Apakah anda benar-benar ingin log out?",
-                                action: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    ElevatedButton.icon(
-                                      onPressed: () async {
-                                        final SharedPreferences pref =
-                                            await _prefs;
-                                        setState(() {
-                                          isSelected = true;
-                                        });
-                                        if (!mounted) return;
-                                        pref.remove("is_login_success");
-                                        pref.remove("username");
-                                        pref.remove("kartuId");
-                                        Navigator.pushReplacement(context,
-                                            MaterialPageRoute(builder: (_) {
-                                          return const LoginApps();
-                                        }));
-                                      },
-                                      icon: const Icon(
-                                        Icons.logout,
+              Column(
+                children: [
+                  const Divider(
+                    thickness: 1,
+                  ),
+                  ListTile(
+                      onTap: () {
+                        showDialog(
+                            context: context,
+                            builder: (_) {
+                              return DialogBox(
+                                  title: "Perhatian",
+                                  description:
+                                      "Apakah anda benar-benar ingin log out?",
+                                  action: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      ElevatedButton.icon(
+                                        onPressed: () async {
+                                          final SharedPreferences pref =
+                                              await _prefs;
+                                          setState(() {
+                                            isSelected = true;
+                                          });
+                                          if (!mounted) return;
+                                          pref.remove("is_login_success");
+                                          pref.remove("username");
+                                          pref.remove("kartuId");
+                                          Navigator.push(context,
+                                              MaterialPageRoute(builder: (_) {
+                                            return const LoginApps();
+                                          }));
+                                        },
+                                        icon: const Icon(
+                                          Icons.logout,
+                                        ),
+                                        label: const Text("Log Out",
+                                            style: TextStyle(
+                                                fontFamily: "SourceSansPro")),
+                                        style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.red),
                                       ),
-                                      label: const Text("Log Out",
-                                          style: TextStyle(
-                                              fontFamily: "SourceSansPro")),
-                                      style: ElevatedButton.styleFrom(
-                                          backgroundColor: Colors.red),
-                                    ),
-                                    const SizedBox(width: 25),
-                                    ElevatedButton.icon(
-                                      onPressed: () {
-                                        return Navigator.of(context).pop();
-                                      },
-                                      icon: const Icon(
-                                        Icons.cancel,
-                                        color: Colors.black,
-                                      ),
-                                      label: const Text("Cancel",
-                                          style: TextStyle(
-                                              fontFamily: "SourceSansPro",
-                                              color: Colors.black)),
-                                      style: ElevatedButton.styleFrom(
-                                          backgroundColor: Colors.white),
-                                    )
-                                  ],
-                                ));
-                          });
-                    },
-                    title: const Text(
-                      "Log Out",
-                      style: TextStyle(
-                          fontFamily: "SourceSansPro",
-                          fontSize: 25,
-                          color: Colors.white),
-                    )),
+                                      const SizedBox(width: 25),
+                                      ElevatedButton.icon(
+                                        onPressed: () {
+                                          return Navigator.of(context).pop();
+                                        },
+                                        icon: const Icon(
+                                          Icons.cancel,
+                                          color: Colors.black,
+                                        ),
+                                        label: const Text("Cancel",
+                                            style: TextStyle(
+                                                fontFamily: "SourceSansPro",
+                                                color: Colors.black)),
+                                        style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.white),
+                                      )
+                                    ],
+                                  ));
+                            });
+                      },
+                      title: Row(
+                        children: const [
+                          Icon(Icons.logout),
+                          SizedBox(width: 5),
+                          Text(
+                            "Log Out",
+                            style: TextStyle(
+                              fontFamily: "Segoeui",
+                              fontSize: 15,
+                            ),
+                          ),
+                        ],
+                      )),
+                ],
               )
             ],
           ),

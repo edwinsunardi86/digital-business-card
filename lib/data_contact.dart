@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:digital_business/API/api_delete_data_contact.dart';
 import 'package:digital_business/API/api_update_data_contact.dart';
+import 'package:digital_business/avatar.dart';
 import 'package:digital_business/component/dialog_box.dart';
 import 'package:digital_business/sidebar.dart';
 import 'package:flutter/material.dart';
@@ -52,20 +53,34 @@ class _DataContactState extends State<DataContact> {
           elevation: 0,
           backgroundColor: Colors.transparent,
           iconTheme: const IconThemeData(color: Colors.black),
+          actions: [
+            GestureDetector(
+                onTap: () {
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const AvatarCard(),
+                      ));
+                },
+                child: const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Icon(Icons.arrow_back),
+                ))
+          ],
         ),
         body: SafeArea(
           child: Column(
             children: [
               Container(
-                  margin: const EdgeInsets.all(30),
+                  margin: const EdgeInsets.only(top: 17),
                   child: Center(
                     child: Image(
-                      width: MediaQuery.of(context).size.width * 0.30,
+                      width: MediaQuery.of(context).size.width * 0.40,
                       image: const AssetImage("assets/images/Logos.png"),
                     ),
                   )),
               Container(
-                margin: const EdgeInsets.only(top: 15, bottom: 30),
+                margin: const EdgeInsets.only(top: 10, bottom: 30),
                 child: const Text(
                   "Data Contact",
                   style: TextStyle(
@@ -162,24 +177,29 @@ class _DataContactState extends State<DataContact> {
         child: Column(
           children: [
             ListTile(
-              leading: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    nama,
-                    style: const TextStyle(
-                        fontFamily: "SourceSansPro",
-                        fontWeight: FontWeight.bold,
-                        fontSize: 17),
-                  ),
-                  Text(
-                    company,
-                    style: const TextStyle(
-                        fontFamily: "SourceSansPro",
-                        // fontStyle: FontStyle.italic,
-                        fontSize: 15),
-                  ),
-                ],
+              leading: Container(
+                width: 230,
+                height: 150,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      nama,
+                      style: const TextStyle(
+                          fontFamily: "SourceSansPro",
+                          fontWeight: FontWeight.bold,
+                          fontSize: 17),
+                    ),
+                    Text(
+                      company,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                          fontFamily: "SourceSansPro",
+                          // fontStyle: FontStyle.italic,
+                          fontSize: 15),
+                    ),
+                  ],
+                ),
               ),
               trailing: Text(
                 kodeDial + contactHp,

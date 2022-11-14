@@ -41,6 +41,7 @@ dependencies:
   url_launcher: ^6.1.6
   shared_preferences: ^2.0.15
   cached_network_image: ^3.2.2
+  shimmer: ^2.0.0
 
 dev_dependencies:
   flutter_test:
@@ -75,6 +76,7 @@ flutter:
     - assets/images/Logos.png
     - assets/images/qr/1945061740_Herman_Julianto.png
     - assets/images/icon_info.png
+    - assets/images/Avatar-Profile.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 
