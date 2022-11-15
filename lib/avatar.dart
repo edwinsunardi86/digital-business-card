@@ -2,9 +2,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:digital_business/API/api_get_data_profile.dart';
 import 'package:digital_business/API/url_static.dart';
 import 'package:digital_business/component/my_painter.dart';
-import 'package:digital_business/component/shimmer.dart';
-import 'package:digital_business/component/shimmer_loading.dart';
-// import 'package:shimmer/shimmer.dart';
+// import 'package:digital_business/component/shimmer.dart';
+// import 'package:digital_business/component/shimmer_loading.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:digital_business/data_contact.dart';
 import 'package:digital_business/share_contact.dart';
 import 'package:digital_business/sidebar.dart';
@@ -47,26 +47,6 @@ class _AvatarCardState extends State<AvatarCard> {
 
   @override
   Widget build(BuildContext context) {
-    const shimmerGradient = LinearGradient(
-      colors: [
-        Color(0xFFEBEBF4),
-        Color.fromARGB(255, 194, 193, 193),
-        Color(0xFFEBEBF4),
-      ],
-      stops: [
-        0.1,
-        0.3,
-        0.4,
-      ],
-      begin: Alignment(-1.0, -0.3),
-      end: Alignment(1.0, 0.3),
-      tileMode: TileMode.clamp,
-    );
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ]);
-
     return SafeArea(
       child: Container(
         decoration: const BoxDecoration(
@@ -93,15 +73,16 @@ class _AvatarCardState extends State<AvatarCard> {
                         left: MediaQuery.of(context).size.width * 0.15,
                         right: MediaQuery.of(context).size.width * 0.15),
                     child: (_kartuFoto == null)
-                        ? Container(
-                            width: MediaQuery.of(context).size.width * 0.55,
-                            height: MediaQuery.of(context).size.width * 0.55,
-                            decoration: const BoxDecoration(
-                                shape: BoxShape.circle, color: Colors.white),
-                            child: const Image(
-                                image: AssetImage(
-                                    "assets/images/Avatar-Profile.png")),
-                          )
+                        ? Shimmer.fromColors(
+                            baseColor: const Color.fromARGB(255, 231, 231, 231),
+                            highlightColor:
+                                const Color.fromARGB(255, 241, 240, 240),
+                            child: Container(
+                              width: 250,
+                              height: 250,
+                              decoration: const BoxDecoration(
+                                  shape: BoxShape.circle, color: Colors.grey),
+                            ))
                         : CachedNetworkImage(
                             width: MediaQuery.of(context).size.width * 0.7,
                             fit: BoxFit.cover,
@@ -109,12 +90,30 @@ class _AvatarCardState extends State<AvatarCard> {
                                 "${UrlAPIStatic.urlAPI()}dnc/dash/pasfoto/$_kartuFoto",
                             progressIndicatorBuilder: (_, url, download) {
                               if (download.progress != null) {
-                                final percent = download.progress! * 100;
-                                return Text("$percent% done loading");
+                                return Shimmer.fromColors(
+                                    baseColor: const Color.fromARGB(
+                                        255, 231, 231, 231),
+                                    highlightColor: const Color.fromARGB(
+                                        255, 241, 240, 240),
+                                    child: Container(
+                                      width: 250,
+                                      height: 250,
+                                      decoration: const BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: Colors.grey),
+                                    ));
                               } else {
-                                return const CircularProgressIndicator(
-                                  color: Colors.white,
-                                );
+                                return Shimmer.fromColors(
+                                    baseColor: const Color.fromARGB(
+                                        255, 231, 231, 231),
+                                    highlightColor: const Color.fromARGB(
+                                        255, 241, 240, 240),
+                                    child: Container(
+                                        width: 250,
+                                        height: 250,
+                                        decoration: const BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: Colors.grey)));
                               }
                             },
                           ),
@@ -125,12 +124,17 @@ class _AvatarCardState extends State<AvatarCard> {
                   (_kartuNama != null)
                       ? Text(_kartuNama.toString(),
                           style: const TextStyle(
+                              fontFamily: "Segoeui",
                               fontSize: 25,
                               color: Colors.black,
                               fontWeight: FontWeight.bold))
-                      : const CircularProgressIndicator(
-                          color: Colors.white,
-                        ),
+                      : Shimmer.fromColors(
+                          baseColor: Colors.grey,
+                          highlightColor:
+                              const Color.fromARGB(255, 192, 192, 192),
+                          child: const Text("Loading..",
+                              style: TextStyle(
+                                  fontFamily: "Segoeui", fontSize: 25))),
                   const SizedBox(
                     height: 25,
                   ),

@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:digital_business/API/api_get_data_profile.dart';
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
 
 class ShareContact extends StatefulWidget {
   final String? kartuId;
@@ -75,20 +76,37 @@ class _ShareContactState extends State<ShareContact> {
                         }
                       },
                     )
-                  : const Image(
-                      image: NetworkImage(
-                          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScRXe2s0YvgLGalBPBxnFALHraKQwImy3Y7CpaUxA&s"))),
+                  : Shimmer.fromColors(
+                      baseColor: const Color.fromARGB(255, 231, 231, 231),
+                      highlightColor: const Color.fromARGB(255, 241, 240, 240),
+                      child: Container(
+                        width: 245,
+                        height: 245,
+                        decoration: const BoxDecoration(
+                            shape: BoxShape.circle, color: Colors.grey),
+                      ))),
         ),
-        SizedBox(
-          child: Center(
-              child: Text(
-            _nama.toString(),
-            style: const TextStyle(
-                fontSize: 30,
-                fontFamily: "Segoeui",
-                fontWeight: FontWeight.w700),
-          )),
-        ),
+        (_nama != null)
+            ? SizedBox(
+                child: Center(
+                    child: Text(
+                  _nama.toString(),
+                  style: const TextStyle(
+                      fontSize: 30,
+                      fontFamily: "Segoeui",
+                      fontWeight: FontWeight.w700),
+                )),
+              )
+            : Shimmer.fromColors(
+                baseColor: const Color.fromARGB(255, 231, 231, 231),
+                highlightColor: const Color.fromARGB(255, 241, 240, 240),
+                child: Container(
+                  width: MediaQuery.of(context).size.width * 0.45,
+                  height: 35,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.grey),
+                )),
         const SizedBox(
           height: 20,
         ),
@@ -100,7 +118,19 @@ class _ShareContactState extends State<ShareContact> {
                   style: const TextStyle(fontSize: 20, fontFamily: "Segoeui"),
                 )),
               )
-            : const Text(""),
+            : Shimmer.fromColors(
+                baseColor: const Color.fromARGB(255, 231, 231, 231),
+                highlightColor: const Color.fromARGB(255, 241, 240, 240),
+                child: Container(
+                  width: MediaQuery.of(context).size.width * 0.38,
+                  height: 25,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.grey),
+                )),
+        const SizedBox(
+          height: 20,
+        ),
         (_kartuPhone2 != null)
             ? SizedBox(
                 child: Center(
@@ -109,7 +139,16 @@ class _ShareContactState extends State<ShareContact> {
                   style: const TextStyle(fontSize: 20, fontFamily: "Segoeui"),
                 )),
               )
-            : const Text(""),
+            : Shimmer.fromColors(
+                baseColor: const Color.fromARGB(255, 231, 231, 231),
+                highlightColor: const Color.fromARGB(255, 241, 240, 240),
+                child: Container(
+                  width: MediaQuery.of(context).size.width * 0.38,
+                  height: 25,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.grey),
+                )),
         const SizedBox(
           height: 20,
         ),
@@ -121,7 +160,16 @@ class _ShareContactState extends State<ShareContact> {
                   style: const TextStyle(fontSize: 20, fontFamily: "Segoeui"),
                 )),
               )
-            : Text(""),
+            : Shimmer.fromColors(
+                baseColor: const Color.fromARGB(255, 231, 231, 231),
+                highlightColor: const Color.fromARGB(255, 241, 240, 240),
+                child: Container(
+                  width: MediaQuery.of(context).size.width * 0.42,
+                  height: 22,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.grey),
+                )),
         const SizedBox(height: 30),
         ElevatedButton(
             onPressed: () {

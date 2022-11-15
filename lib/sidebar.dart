@@ -1,14 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:digital_business/API/api_get_data_profile.dart';
 import 'package:digital_business/API/url_static.dart';
-import 'package:digital_business/avatar.dart';
 import 'package:digital_business/change_password.dart';
 import 'package:digital_business/component/dialog_box.dart';
-import 'package:digital_business/data_contact.dart';
 import 'package:digital_business/login.dart';
-import 'package:digital_business/share_contact.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shimmer/shimmer.dart';
 
 class Sidebar extends StatefulWidget {
   final String? kartuId;
@@ -91,40 +89,78 @@ class _SidebarState extends State<Sidebar> {
                                         }
                                       },
                                     )
-                                  : Container(
-                                      width: 100,
-                                      decoration: const BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          color: Colors.white),
-                                      child: const Image(
-                                          image: AssetImage(
-                                              "assets/images/Avatar-Profile.png")),
-                                    )),
-                          (_fullname != "")
+                                  : Shimmer.fromColors(
+                                      baseColor: const Color.fromARGB(
+                                          255, 223, 223, 223),
+                                      highlightColor: const Color.fromARGB(
+                                          255, 235, 235, 235),
+                                      child: Container(
+                                          width: 85,
+                                          height: 85,
+                                          decoration: const BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              color: Colors.white)))),
+                          const SizedBox(height: 10),
+                          (_fullname != null)
                               ? Text(_fullname.toString(),
                                   style: const TextStyle(
                                       fontFamily: "Segoeui",
                                       fontSize: 17,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white))
-                              : Text(""),
-                          (_jabatan != "")
+                              : Shimmer.fromColors(
+                                  baseColor:
+                                      const Color.fromARGB(255, 223, 223, 223),
+                                  highlightColor:
+                                      const Color.fromARGB(255, 235, 235, 235),
+                                  child: Container(
+                                      width: 90,
+                                      height: 15,
+                                      decoration: const BoxDecoration(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(10)),
+                                          color: Colors.white))),
+                          const SizedBox(height: 10),
+                          (_jabatan != null)
                               ? Text(_jabatan.toString(),
                                   style: const TextStyle(
                                       fontFamily: "Segoeui",
                                       fontSize: 11,
                                       color: Colors.white))
-                              : Text(""),
-                          (_email != "")
+                              : Shimmer.fromColors(
+                                  baseColor:
+                                      const Color.fromARGB(255, 223, 223, 223),
+                                  highlightColor:
+                                      const Color.fromARGB(255, 235, 235, 235),
+                                  child: Container(
+                                      width: 80,
+                                      height: 15,
+                                      decoration: const BoxDecoration(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(10)),
+                                          color: Colors.white))),
+                          const SizedBox(height: 10),
+                          (_email != null)
                               ? Text(_email.toString(),
                                   style: const TextStyle(
                                       fontFamily: "Segoeui",
                                       fontSize: 11,
                                       color: Colors.white))
-                              : Text(""),
+                              : Shimmer.fromColors(
+                                  baseColor:
+                                      const Color.fromARGB(255, 223, 223, 223),
+                                  highlightColor:
+                                      const Color.fromARGB(255, 235, 235, 235),
+                                  child: Container(
+                                      width: 80,
+                                      height: 15,
+                                      decoration: const BoxDecoration(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(10)),
+                                          color: Colors.white))),
                         ])),
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 5),
                   // ListTile(
                   //     onTap: () {
                   //       setState(() {

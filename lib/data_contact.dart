@@ -7,7 +7,7 @@ import 'package:digital_business/component/dialog_box.dart';
 import 'package:digital_business/sidebar.dart';
 import 'package:flutter/material.dart';
 import 'package:digital_business/API/api_list_data_contact.dart';
-import 'package:digital_business/component/contact_action_box.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:digital_business/component/custom_dialog_box.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -160,13 +160,141 @@ class _DataContactState extends State<DataContact> {
                             }),
                       );
                     } else {
-                      return Text("");
+                      return shimmerCard();
                     }
                   }),
             ],
           ),
         ));
   }
+
+  Expanded shimmerCard() => Expanded(
+          child: ListView.builder(
+        itemCount: 4,
+        itemBuilder: (context, index) {
+          return Card(
+            child: Container(
+              margin: const EdgeInsets.only(top: 10, bottom: 10),
+              child: Column(
+                children: [
+                  ListTile(
+                      leading: SizedBox(
+                          width: 230,
+                          height: 150,
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Shimmer.fromColors(
+                                    baseColor: const Color.fromARGB(
+                                        255, 231, 231, 231),
+                                    highlightColor: const Color.fromARGB(
+                                        255, 241, 240, 240),
+                                    child: Container(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.45,
+                                      height: 15,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: const Color.fromARGB(
+                                            255, 207, 207, 207),
+                                      ),
+                                    )),
+                                Shimmer.fromColors(
+                                    baseColor: const Color.fromARGB(
+                                        255, 231, 231, 231),
+                                    highlightColor: const Color.fromARGB(
+                                        255, 241, 240, 240),
+                                    child: Container(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.45,
+                                      height: 15,
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          color: Colors.grey),
+                                    ))
+                              ])),
+                      trailing: Shimmer.fromColors(
+                          baseColor: const Color.fromARGB(255, 231, 231, 231),
+                          highlightColor:
+                              const Color.fromARGB(255, 241, 240, 240),
+                          child: Container(
+                            width: MediaQuery.of(context).size.width * 0.35,
+                            height: 15,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.grey),
+                          ))),
+                  Row(
+                    children: [
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Shimmer.fromColors(
+                        baseColor: const Color.fromARGB(255, 231, 231, 231),
+                        highlightColor:
+                            const Color.fromARGB(255, 241, 240, 240),
+                        child: Container(
+                          width: 40,
+                          height: 40,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(5)),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Shimmer.fromColors(
+                        baseColor: const Color.fromARGB(255, 231, 231, 231),
+                        highlightColor:
+                            const Color.fromARGB(255, 241, 240, 240),
+                        child: Container(
+                          width: 40,
+                          height: 40,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(5)),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Shimmer.fromColors(
+                        baseColor: const Color.fromARGB(255, 231, 231, 231),
+                        highlightColor:
+                            const Color.fromARGB(255, 241, 240, 240),
+                        child: Container(
+                          width: 40,
+                          height: 40,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(5)),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Shimmer.fromColors(
+                        baseColor: const Color.fromARGB(255, 231, 231, 231),
+                        highlightColor:
+                            const Color.fromARGB(255, 241, 240, 240),
+                        child: Container(
+                          width: 40,
+                          height: 40,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(5)),
+                        ),
+                      )
+                    ],
+                  )
+                ],
+              ),
+            ),
+          );
+        },
+      ));
 
   Widget cardContact(String company, String nama, String kodeDial,
       String contactHp, BuildContext context, String id) {
@@ -177,7 +305,7 @@ class _DataContactState extends State<DataContact> {
         child: Column(
           children: [
             ListTile(
-              leading: Container(
+              leading: SizedBox(
                 width: 230,
                 height: 150,
                 child: Column(

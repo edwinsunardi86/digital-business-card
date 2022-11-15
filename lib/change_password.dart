@@ -111,7 +111,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                                           Navigator.pushReplacement(context,
                                               MaterialPageRoute(
                                                   builder: (context) {
-                                            return AvatarCard();
+                                            return const AvatarCard();
                                           }));
                                         },
                                         icon: const Icon(Icons.route),
@@ -122,7 +122,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                         });
                       }
                     },
-                    icon: const Icon(Icons.password),
+                    icon: const Icon(Icons.key),
                     label: const Text(
                       "Change Password",
                       style: TextStyle(fontFamily: "SourceSansPro"),
