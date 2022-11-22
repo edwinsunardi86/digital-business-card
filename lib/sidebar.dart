@@ -45,7 +45,7 @@ class _SidebarState extends State<Sidebar> {
   Widget build(BuildContext context) {
     bool? isSelected = false;
     return Drawer(
-        width: 200,
+        width: MediaQuery.of(context).size.width * 0.4,
         elevation: 5,
         backgroundColor: const Color.fromARGB(200, 255, 255, 255),
         child: Container(

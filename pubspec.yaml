@@ -77,6 +77,7 @@ flutter:
     - assets/images/qr/1945061740_Herman_Julianto.png
     - assets/images/icon_info.png
     - assets/images/Avatar-Profile.png
+    - assets/images/name_card_digital_samsung_main.jpg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 
