@@ -47,8 +47,8 @@ class _ShareContactState extends State<ShareContact> {
     return Scaffold(
       body: Responsive(
           mobile: shareContact(context, 0.37, 0.60),
-          tablet: shareContact(context, 0.20, 0.30),
-          desktop: shareContact(context, 0.37, 0.60)),
+          tablet: shareContact(context, 0.20, 0.45),
+          desktop: shareContact(context, 0.37, 0.45)),
     );
   }
 
