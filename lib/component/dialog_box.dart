@@ -28,7 +28,8 @@ class DialogBox extends StatelessWidget {
 
   contentBox(context) {
     return Stack(
-      children: <Widget>[_container(context), _positioned(context)],
+      alignment: Alignment.topRight,
+      children: [_container(context), _positioned(context)],
     );
   }
 
@@ -47,6 +48,7 @@ class DialogBox extends StatelessWidget {
       );
 
   Container _container(context) => Container(
+        width: MediaQuery.of(context).size.width / 1.6,
         padding: const EdgeInsets.only(
             left: Constants.padding,
             top: Constants.avatarRadius + Constants.padding,

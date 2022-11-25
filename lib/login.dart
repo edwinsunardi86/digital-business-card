@@ -4,6 +4,7 @@ import 'package:digital_business/avatar.dart';
 import 'package:digital_business/component/dialog_box.dart';
 import 'package:digital_business/component/custom_shape.dart';
 import 'package:digital_business/component/text_form_field.dart';
+import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginApps extends StatefulWidget {
@@ -36,6 +37,10 @@ class _LoginAppsState extends State<LoginApps> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
     return Scaffold(
         resizeToAvoidBottomInset: false,
         body: SafeArea(

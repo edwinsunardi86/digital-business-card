@@ -1,4 +1,5 @@
 import 'package:digital_business/avatar.dart';
+import 'package:digital_business/example_dialog.dart';
 import 'package:digital_business/login.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -35,10 +36,9 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        theme: ThemeData(
-            scaffoldBackgroundColor: const Color.fromARGB(255, 255, 255, 255)),
+
         //home: const LoginApps());
-        //home: const AvatarCard());
+        // home: const MyDialogAlert());
         home:
             (isLoginSuccess == true) ? const AvatarCard() : const LoginApps());
   }

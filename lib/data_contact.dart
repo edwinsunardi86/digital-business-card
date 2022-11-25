@@ -46,6 +46,10 @@ class _DataContactState extends State<DataContact> {
     initial();
   }
 
+  Future<bool> _willPopScope() async {
+    return false;
+  }
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([
@@ -53,31 +57,32 @@ class _DataContactState extends State<DataContact> {
       DeviceOrientation.portraitDown,
     ]);
     Color? eventColorTextField;
-    return Scaffold(
-        drawer: Sidebar(kartuId: _kartuId),
-        appBar: AppBar(
-          elevation: 0,
-          backgroundColor: Colors.transparent,
-          iconTheme: const IconThemeData(color: Colors.black),
-          actions: [
-            GestureDetector(
-                onTap: () {
-                  Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const AvatarCard(),
-                      ));
-                },
-                child: const Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Icon(Icons.arrow_back),
-                ))
-          ],
-        ),
-        body: Responsive(
-            mobile: dataContact(context, eventColorTextField),
-            desktop: dataContact(context, eventColorTextField),
-            tablet: dataContact(context, eventColorTextField)));
+    return WillPopScope(
+        onWillPop: _willPopScope,
+        child: Scaffold(
+            extendBodyBehindAppBar: true,
+            resizeToAvoidBottomInset: false,
+            drawer: Sidebar(kartuId: _kartuId),
+            appBar: AppBar(
+              elevation: 0,
+              backgroundColor: Colors.transparent,
+              iconTheme: const IconThemeData(color: Colors.black),
+              actions: [
+                GestureDetector(
+                    onTap: () {
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const AvatarCard(),
+                          ));
+                    },
+                    child: const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Icon(Icons.arrow_back),
+                    ))
+              ],
+            ),
+            body: dataContact(context, eventColorTextField)));
   }
 
   SafeArea dataContact(BuildContext context, Color? eventColorTextField) {
@@ -456,73 +461,78 @@ class _DataContactState extends State<DataContact> {
                           context: context,
                           builder: (context) {
                             dialogContext = context;
-                            return DialogBox(
-                                title: "Perhatian",
-                                description:
-                                    "Apakah anda ingin menyimpan data kontak ini ke phone book anda?",
-                                action: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: [
-                                    ElevatedButton.icon(
-                                      onPressed: () async {
-                                        if (await FlutterContacts
-                                            .requestPermission()) {
-                                          final Contact newContact = Contact();
-                                          newContact.name =
-                                              Name(nickname: nama);
-                                          newContact.organizations = [
-                                            Organization(company: company)
-                                          ];
-                                          newContact.phones = [
-                                            Phone(contactHp)
-                                          ];
-                                          await newContact.insert();
-                                          await APIUpdateContact
-                                              .updateHiddenContact(id);
-                                          showDialog(
-                                              context: context,
-                                              builder: (context) {
-                                                return CustomDialogBox(
-                                                  title: "Perhatian",
-                                                  description:
-                                                      "Kontak dengan nama $nama tersimpan",
-                                                  text: "Tutup",
-                                                );
-                                              });
-                                        }
-                                        if (mounted) {
-                                          Navigator.pushReplacement(
-                                              dialogContext, MaterialPageRoute(
-                                                  builder: (dialogContext) {
-                                            return const DataContact();
-                                          }));
-                                        } else {
-                                          return;
-                                        }
-                                      },
-                                      icon: const Icon(Icons.save),
-                                      label: const Text("Save"),
-                                      style: ElevatedButton.styleFrom(
-                                          backgroundColor: Colors.green),
-                                    ),
-                                    ElevatedButton.icon(
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                      icon: const Icon(
-                                        Icons.cancel,
-                                        color: Colors.black,
+                            return Container(
+                              width: MediaQuery.of(context).size.width / 2,
+                              child: DialogBox(
+                                  title: "Perhatian",
+                                  description:
+                                      "Apakah anda ingin menyimpan data kontak ini ke phone book anda?",
+                                  action: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                      ElevatedButton.icon(
+                                        onPressed: () async {
+                                          if (await FlutterContacts
+                                              .requestPermission()) {
+                                            final Contact newContact =
+                                                Contact();
+                                            newContact.name =
+                                                Name(nickname: nama);
+                                            newContact.organizations = [
+                                              Organization(company: company)
+                                            ];
+                                            newContact.phones = [
+                                              Phone(contactHp)
+                                            ];
+                                            await newContact.insert();
+                                            await APIUpdateContact
+                                                .updateHiddenContact(id);
+                                            showDialog(
+                                                context: context,
+                                                builder: (context) {
+                                                  return CustomDialogBox(
+                                                    title: "Perhatian",
+                                                    description:
+                                                        "Kontak dengan nama $nama tersimpan",
+                                                    text: "Tutup",
+                                                  );
+                                                });
+                                          }
+                                          if (mounted) {
+                                            Navigator.pushReplacement(
+                                                dialogContext,
+                                                MaterialPageRoute(
+                                                    builder: (dialogContext) {
+                                              return const DataContact();
+                                            }));
+                                          } else {
+                                            return;
+                                          }
+                                        },
+                                        icon: const Icon(Icons.save),
+                                        label: const Text("Save"),
+                                        style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.green),
                                       ),
-                                      label: const Text(
-                                        "Cancel",
-                                        style: TextStyle(color: Colors.black),
-                                      ),
-                                      style: ElevatedButton.styleFrom(
-                                          backgroundColor: Colors.white),
-                                    )
-                                  ],
-                                ));
+                                      ElevatedButton.icon(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        icon: const Icon(
+                                          Icons.cancel,
+                                          color: Colors.black,
+                                        ),
+                                        label: const Text(
+                                          "Cancel",
+                                          style: TextStyle(color: Colors.black),
+                                        ),
+                                        style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.white),
+                                      )
+                                    ],
+                                  )),
+                            );
                           });
                     },
                     child: const Icon(Icons.contact_page, color: Colors.white),

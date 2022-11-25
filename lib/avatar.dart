@@ -44,6 +44,10 @@ class _AvatarCardState extends State<AvatarCard> {
     getProfil();
   }
 
+  Future<bool> _willPopScope() async {
+    return false;
+  }
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([
@@ -52,28 +56,32 @@ class _AvatarCardState extends State<AvatarCard> {
     ]);
     Size? size = MediaQuery.of(context).size;
     return SafeArea(
-        child: Scaffold(
-            resizeToAvoidBottomInset: false,
+        child: WillPopScope(
+      onWillPop: _willPopScope,
+      child: Scaffold(
+          extendBodyBehindAppBar: true,
+          resizeToAvoidBottomInset: false,
+          backgroundColor: Colors.transparent,
+          drawer: Sidebar(
+            kartuId: _kartuId,
+          ),
+          appBar: AppBar(
+            elevation: 0,
             backgroundColor: Colors.transparent,
-            drawer: Sidebar(
-              kartuId: _kartuId,
-            ),
-            appBar: AppBar(
-              elevation: 0,
-              backgroundColor: Colors.transparent,
-            ),
-            body: Responsive(
-              mobile: layoutCard(context, size.width * 0.7,
-                  "assets/images/background_avatar.png"),
-              tablet: layoutCard(context, size.width * 0.4,
-                  "assets/images/name_card_digital_samsung_main.jpg"),
-              desktop: layoutCard(context, size.width * 0.7,
-                  "assets/images/name_card_digital_samsung_main.jpg"),
-            )));
+          ),
+          body: Responsive(
+            mobile: layoutCard(context, size.width * 0.7,
+                "assets/images/background_avatar.png", 0),
+            tablet: layoutCard(context, size.width * 0.55,
+                "assets/images/name_card_digital_samsung_main.jpg", 10),
+            desktop: layoutCard(context, size.width * 0.55,
+                "assets/images/name_card_digital_samsung_main.jpg", 20),
+          )),
+    ));
   }
 
-  Container layoutCard(
-      BuildContext context, double sizeWidthPhoto, String imageBgUrl) {
+  Container layoutCard(BuildContext context, double sizeWidthPhoto,
+      String imageBgUrl, double addFontSize) {
     return Container(
       decoration: BoxDecoration(
           image: DecorationImage(
@@ -131,17 +139,18 @@ class _AvatarCardState extends State<AvatarCard> {
               ),
               (_kartuNama != null)
                   ? Text(_kartuNama.toString(),
-                      style: const TextStyle(
+                      style: TextStyle(
                           fontFamily: "Segoeui",
-                          fontSize: 25,
+                          fontSize: 25 + addFontSize.toDouble(),
                           color: Colors.black,
                           fontWeight: FontWeight.bold))
                   : Shimmer.fromColors(
                       baseColor: Colors.grey,
                       highlightColor: const Color.fromARGB(255, 192, 192, 192),
-                      child: const Text("Loading..",
-                          style:
-                              TextStyle(fontFamily: "Segoeui", fontSize: 25))),
+                      child: Text("Loading..",
+                          style: TextStyle(
+                              fontFamily: "Segoeui",
+                              fontSize: 25 + addFontSize.toDouble()))),
               const SizedBox(
                 height: 25,
               ),
@@ -156,7 +165,7 @@ class _AvatarCardState extends State<AvatarCard> {
                     elevation: 0,
                     child: SizedBox(
                       width: MediaQuery.of(context).size.width * 0.30,
-                      height: 35,
+                      height: MediaQuery.of(context).size.height * 0.035,
                       child: InkWell(
                         onTap: () {
                           Navigator.push(
@@ -169,14 +178,14 @@ class _AvatarCardState extends State<AvatarCard> {
                         splashColor: Colors.white,
                         child: CustomPaint(
                           painter: MyPainter(),
-                          child: const Center(
+                          child: Center(
                             child: Text(
                               "BAGIKAN",
                               style: TextStyle(
-                                fontSize: 13,
+                                fontSize: 13 + addFontSize.toDouble(),
                                 fontFamily: "SourceSansPro",
                                 fontWeight: FontWeight.bold,
-                                color: Color.fromARGB(255, 145, 5, 5),
+                                color: const Color.fromARGB(255, 145, 5, 5),
                               ),
                             ),
                           ),
@@ -190,7 +199,7 @@ class _AvatarCardState extends State<AvatarCard> {
                     elevation: 0,
                     child: SizedBox(
                       width: MediaQuery.of(context).size.width * 0.30,
-                      height: 35,
+                      height: MediaQuery.of(context).size.height * 0.035,
                       child: InkWell(
                         onTap: () {
                           Navigator.push(
@@ -202,14 +211,14 @@ class _AvatarCardState extends State<AvatarCard> {
                         splashColor: Colors.white,
                         child: CustomPaint(
                           painter: MyPainter(),
-                          child: const Center(
+                          child: Center(
                             child: Text(
                               "LIHAT CONTACT",
                               style: TextStyle(
-                                fontSize: 13,
+                                fontSize: 13 + addFontSize.toDouble(),
                                 fontFamily: "SourceSansPro",
                                 fontWeight: FontWeight.bold,
-                                color: Color.fromARGB(255, 145, 5, 5),
+                                color: const Color.fromARGB(255, 145, 5, 5),
                               ),
                             ),
                           ),

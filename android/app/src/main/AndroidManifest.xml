@@ -8,7 +8,7 @@
     <uses-permission android:name="android.permission.WRITE_CONTACTS" />  
     <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
    <application
-        android:label="SOSIN"
+        android:label="SOSIN beta 1.0"
         android:name="${applicationName}"
         android:hardwareAccelerated="true"
         android:usesCleartextTraffic="true"

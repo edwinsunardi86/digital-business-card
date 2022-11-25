@@ -8,6 +8,7 @@ class TextFormFieldVarian1 extends StatelessWidget {
   final String? Function(String?)? validator;
   final bool? autofocus;
   final FocusNode? focusNode;
+  final double? fontSize;
   const TextFormFieldVarian1(
       {super.key,
       this.controller,
@@ -16,7 +17,8 @@ class TextFormFieldVarian1 extends StatelessWidget {
       this.prefixIcon,
       this.validator,
       this.autofocus,
-      this.focusNode});
+      this.focusNode,
+      this.fontSize});
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +28,7 @@ class TextFormFieldVarian1 extends StatelessWidget {
       validator: validator,
       autofocus: autofocus ?? false,
       focusNode: focusNode,
+      style: TextStyle(fontSize: fontSize),
       decoration: InputDecoration(
           labelText: labelText,
           prefixIcon: prefixIcon,

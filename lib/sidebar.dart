@@ -3,6 +3,7 @@ import 'package:digital_business/API/api_get_data_profile.dart';
 import 'package:digital_business/API/url_static.dart';
 import 'package:digital_business/change_password.dart';
 import 'package:digital_business/component/dialog_box.dart';
+import 'package:digital_business/component/responsive.dart';
 import 'package:digital_business/login.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -17,7 +18,6 @@ class Sidebar extends StatefulWidget {
 }
 
 class _SidebarState extends State<Sidebar> {
-  String? _kartuId;
   String? _fullname;
   String? _foto;
   String? _jabatan;
@@ -26,7 +26,6 @@ class _SidebarState extends State<Sidebar> {
   void initial() {
     APIGetDataProfile.fetchDataProfile(widget.kartuId).then((value) {
       setState(() {
-        _kartuId = value.kartuId;
         _fullname = value.kartuNama;
         _foto = value.kartuFoto;
         _jabatan = value.kartuJabatan;
@@ -43,9 +42,16 @@ class _SidebarState extends State<Sidebar> {
 
   @override
   Widget build(BuildContext context) {
-    bool? isSelected = false;
+    return Responsive(
+        mobile: responsiveSidebar(context, 0.45, 0),
+        tablet: responsiveSidebar(context, 0.45, 10),
+        desktop: responsiveSidebar(context, 0.45, 20));
+  }
+
+  Drawer responsiveSidebar(
+      BuildContext context, double sizeWidth, double addFontSize) {
     return Drawer(
-        width: MediaQuery.of(context).size.width * 0.4,
+        width: MediaQuery.of(context).size.width * sizeWidth,
         elevation: 5,
         backgroundColor: const Color.fromARGB(200, 255, 255, 255),
         child: Container(
@@ -103,9 +109,9 @@ class _SidebarState extends State<Sidebar> {
                           const SizedBox(height: 10),
                           (_fullname != null)
                               ? Text(_fullname.toString(),
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                       fontFamily: "Segoeui",
-                                      fontSize: 17,
+                                      fontSize: 17 + addFontSize.toDouble(),
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white))
                               : Shimmer.fromColors(
@@ -123,9 +129,9 @@ class _SidebarState extends State<Sidebar> {
                           const SizedBox(height: 10),
                           (_jabatan != null)
                               ? Text(_jabatan.toString(),
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                       fontFamily: "Segoeui",
-                                      fontSize: 11,
+                                      fontSize: 11 + addFontSize.toDouble(),
                                       color: Colors.white))
                               : Shimmer.fromColors(
                                   baseColor:
@@ -142,9 +148,9 @@ class _SidebarState extends State<Sidebar> {
                           const SizedBox(height: 10),
                           (_email != null)
                               ? Text(_email.toString(),
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                       fontFamily: "Segoeui",
-                                      fontSize: 11,
+                                      fontSize: 11 + addFontSize.toDouble(),
                                       color: Colors.white))
                               : Shimmer.fromColors(
                                   baseColor:
@@ -161,28 +167,6 @@ class _SidebarState extends State<Sidebar> {
                         ])),
                   ),
                   const SizedBox(height: 5),
-                  // ListTile(
-                  //     onTap: () {
-                  //       setState(() {
-                  //         isSelected = true;
-                  //       });
-                  //       Navigator.push(context, MaterialPageRoute(builder: (_) {
-                  //         return const AvatarCard();
-                  //       }));
-                  //     },
-                  //     title: Row(
-                  //       children: const [
-                  //         Icon(Icons.person),
-                  //         SizedBox(width: 5),
-                  //         Text(
-                  //           "Ubah Photo Profil",
-                  //           style: TextStyle(
-                  //             fontFamily: "Segoeui",
-                  //             fontSize: 15,
-                  //           ),
-                  //         ),
-                  //       ],
-                  //     )),
                   ListTile(
                       onTap: () {
                         Navigator.push(
@@ -190,19 +174,16 @@ class _SidebarState extends State<Sidebar> {
                             MaterialPageRoute(
                                 builder: ((context) =>
                                     const ChangePassword())));
-                        setState(() {
-                          isSelected = true;
-                        });
                       },
                       title: Row(
-                        children: const [
-                          Icon(Icons.key),
-                          SizedBox(width: 5),
+                        children: [
+                          const Icon(Icons.key),
+                          const SizedBox(width: 5),
                           Text(
                             "Ubah Password",
                             style: TextStyle(
                               fontFamily: "Segoeui",
-                              fontSize: 15,
+                              fontSize: 15 + addFontSize.toDouble(),
                             ),
                           ),
                         ],
@@ -231,9 +212,6 @@ class _SidebarState extends State<Sidebar> {
                                         onPressed: () async {
                                           final SharedPreferences pref =
                                               await _prefs;
-                                          setState(() {
-                                            isSelected = true;
-                                          });
                                           if (!mounted) return;
                                           pref.remove("is_login_success");
                                           pref.remove("username");
@@ -273,14 +251,14 @@ class _SidebarState extends State<Sidebar> {
                             });
                       },
                       title: Row(
-                        children: const [
-                          Icon(Icons.logout),
-                          SizedBox(width: 5),
+                        children: [
+                          const Icon(Icons.logout),
+                          const SizedBox(width: 5),
                           Text(
                             "Log Out",
                             style: TextStyle(
                               fontFamily: "Segoeui",
-                              fontSize: 15,
+                              fontSize: 15 + addFontSize.toDouble(),
                             ),
                           ),
                         ],
