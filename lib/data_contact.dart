@@ -82,10 +82,14 @@ class _DataContactState extends State<DataContact> {
                     ))
               ],
             ),
-            body: dataContact(context, eventColorTextField)));
+            body: Responsive(
+                mobile: dataContact(context, eventColorTextField, 0.40),
+                tablet: dataContact(context, eventColorTextField, 0.25),
+                desktop: dataContact(context, eventColorTextField, 0.40))));
   }
 
-  SafeArea dataContact(BuildContext context, Color? eventColorTextField) {
+  SafeArea dataContact(
+      BuildContext context, Color? eventColorTextField, double sizeLogo) {
     return SafeArea(
       child: Column(
         children: [
@@ -93,7 +97,7 @@ class _DataContactState extends State<DataContact> {
               margin: const EdgeInsets.only(top: 17),
               child: Center(
                 child: Image(
-                  width: MediaQuery.of(context).size.width * 0.40,
+                  width: MediaQuery.of(context).size.width * sizeLogo,
                   image: const AssetImage("assets/images/Logos.png"),
                 ),
               )),

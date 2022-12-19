@@ -56,6 +56,7 @@ class _AvatarCardState extends State<AvatarCard> {
       DeviceOrientation.portraitDown,
     ]);
     Size? size = MediaQuery.of(context).size;
+    print(MediaQuery.of(context).size.width);
     return SafeArea(
         child: WillPopScope(
       onWillPop: _willPopScope,
@@ -110,9 +111,8 @@ class _AvatarCardState extends State<AvatarCard> {
                               shape: BoxShape.circle, color: Colors.grey),
                         ))
                     : Flexible(
-                        flex: 2,
-                        child: Container(
-                          color: Colors.blue,
+                        flex: 3,
+                        child: SizedBox(
                           child: CachedNetworkImage(
                             width: sizeWidthPhoto,
                             fit: BoxFit.contain,
@@ -154,9 +154,8 @@ class _AvatarCardState extends State<AvatarCard> {
                 // ),
                 (_kartuNama != null)
                     ? Flexible(
-                        flex: 3,
-                        child: Container(
-                          color: Colors.red,
+                        flex: 2,
+                        child: SizedBox(
                           child: Text(_kartuNama.toString(),
                               style: TextStyle(
                                   fontFamily: "Segoeui",
@@ -173,16 +172,35 @@ class _AvatarCardState extends State<AvatarCard> {
                             style: TextStyle(
                                 fontFamily: "Segoeui",
                                 fontSize: 25 + addFontSize.toDouble()))),
-                // const SizedBox(
-                //   height: 25,
-                // ),
-                // const SizedBox(
-                //   height: 25,
-                // ),
+                (_kartuJabatan != null)
+                    ? Flexible(
+                        flex: 2,
+                        child: SizedBox(
+                          child: Text(_kartuJabatan.toString(),
+                              style: TextStyle(
+                                fontFamily: "Segoeui",
+                                fontSize: 25 + addFontSize.toDouble(),
+                                color: Colors.black,
+                              )),
+                        ),
+                      )
+                    : Shimmer.fromColors(
+                        baseColor: Colors.grey,
+                        highlightColor:
+                            const Color.fromARGB(255, 192, 192, 192),
+                        child: Text("Loading..",
+                            style: TextStyle(
+                                fontFamily: "Segoeui",
+                                fontSize: 25 + addFontSize.toDouble()))),
+                const SizedBox(
+                  height: 25,
+                ),
+                const SizedBox(
+                  height: 25,
+                ),
                 Flexible(
                   flex: 1,
-                  child: Container(
-                    color: Colors.orange,
+                  child: SizedBox(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [

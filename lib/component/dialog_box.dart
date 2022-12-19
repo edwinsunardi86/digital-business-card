@@ -48,7 +48,7 @@ class DialogBox extends StatelessWidget {
       );
 
   Container _container(context) => Container(
-        width: MediaQuery.of(context).size.width / 1.6,
+        width: MediaQuery.of(context).size.width * 0.7,
         padding: const EdgeInsets.only(
             left: Constants.padding,
             top: Constants.avatarRadius + Constants.padding,

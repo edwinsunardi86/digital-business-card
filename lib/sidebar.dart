@@ -23,7 +23,7 @@ class _SidebarState extends State<Sidebar> {
   String? _jabatan;
   String? _email;
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
-  void initial() {
+  void initial() async {
     APIGetDataProfile.fetchDataProfile(widget.kartuId).then((value) {
       setState(() {
         _fullname = value.kartuNama;
@@ -32,6 +32,13 @@ class _SidebarState extends State<Sidebar> {
         _email = value.kartuEmail;
       });
     });
+  }
+
+  void logOut() async {
+    final SharedPreferences pref = await _prefs;
+    pref.remove("is_login_success");
+    pref.remove("username");
+    pref.remove("kartuId");
   }
 
   @override
@@ -199,7 +206,7 @@ class _SidebarState extends State<Sidebar> {
                       onTap: () {
                         showDialog(
                             context: context,
-                            builder: (_) {
+                            builder: (context) {
                               return DialogBox(
                                   title: "Perhatian",
                                   description:
@@ -208,43 +215,49 @@ class _SidebarState extends State<Sidebar> {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      ElevatedButton.icon(
-                                        onPressed: () async {
-                                          final SharedPreferences pref =
-                                              await _prefs;
-                                          if (!mounted) return;
-                                          pref.remove("is_login_success");
-                                          pref.remove("username");
-                                          pref.remove("kartuId");
-                                          Navigator.push(context,
-                                              MaterialPageRoute(builder: (_) {
-                                            return const LoginApps();
-                                          }));
-                                        },
-                                        icon: const Icon(
-                                          Icons.logout,
+                                      Flexible(
+                                        flex: 5,
+                                        child: ElevatedButton.icon(
+                                          onPressed: () {
+                                            logOut();
+                                            Navigator.of(context,
+                                                    rootNavigator: true)
+                                                .pop();
+                                            Navigator.pushReplacement(context,
+                                                MaterialPageRoute(
+                                                    builder: (context) {
+                                              return const LoginApps();
+                                            }));
+                                          },
+                                          icon: const Icon(
+                                            Icons.logout,
+                                          ),
+                                          label: const Text("Log Out",
+                                              style: TextStyle(
+                                                  fontFamily: "SourceSansPro")),
+                                          style: ElevatedButton.styleFrom(
+                                              backgroundColor: Colors.red),
                                         ),
-                                        label: const Text("Log Out",
-                                            style: TextStyle(
-                                                fontFamily: "SourceSansPro")),
-                                        style: ElevatedButton.styleFrom(
-                                            backgroundColor: Colors.red),
                                       ),
-                                      const SizedBox(width: 25),
-                                      ElevatedButton.icon(
-                                        onPressed: () {
-                                          return Navigator.of(context).pop();
-                                        },
-                                        icon: const Icon(
-                                          Icons.cancel,
-                                          color: Colors.black,
+                                      const Flexible(
+                                          flex: 1, child: SizedBox(width: 25)),
+                                      Flexible(
+                                        flex: 5,
+                                        child: ElevatedButton.icon(
+                                          onPressed: () {
+                                            return Navigator.of(context).pop();
+                                          },
+                                          icon: const Icon(
+                                            Icons.cancel,
+                                            color: Colors.black,
+                                          ),
+                                          label: const Text("Cancel",
+                                              style: TextStyle(
+                                                  fontFamily: "SourceSansPro",
+                                                  color: Colors.black)),
+                                          style: ElevatedButton.styleFrom(
+                                              backgroundColor: Colors.white),
                                         ),
-                                        label: const Text("Cancel",
-                                            style: TextStyle(
-                                                fontFamily: "SourceSansPro",
-                                                color: Colors.black)),
-                                        style: ElevatedButton.styleFrom(
-                                            backgroundColor: Colors.white),
                                       )
                                     ],
                                   ));

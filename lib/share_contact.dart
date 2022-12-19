@@ -54,14 +54,17 @@ class _ShareContactState extends State<ShareContact> {
 
   Column shareContact(BuildContext context, double sizeLogo, double sizeQR) {
     return Column(children: [
-      Container(
-          margin: const EdgeInsets.only(top: 45, bottom: 12),
-          child: Center(
-            child: Image(
-              width: MediaQuery.of(context).size.width * sizeLogo,
-              image: const AssetImage("assets/images/Logos.png"),
-            ),
-          )),
+      Flexible(
+        flex: 2,
+        child: Container(
+            margin: const EdgeInsets.only(top: 45, bottom: 12),
+            child: Center(
+              child: Image(
+                width: MediaQuery.of(context).size.width * sizeLogo,
+                image: const AssetImage("assets/images/Logos.png"),
+              ),
+            )),
+      ),
       const SizedBox(
         child: Center(
             child: Text(
@@ -70,125 +73,135 @@ class _ShareContactState extends State<ShareContact> {
               fontSize: 25, fontFamily: "Segoeui", fontWeight: FontWeight.w700),
         )),
       ),
-      Container(
-        margin: const EdgeInsets.all(30),
-        child: Center(
-            child: (_qrCode != null)
-                ? CachedNetworkImage(
-                    width: MediaQuery.of(context).size.width * sizeQR,
-                    imageUrl: "http://203.176.177.251/dnc/dash/qr/$_qrCode",
-                    progressIndicatorBuilder: (context, url, download) {
-                      if (download.progress != null) {
-                        final double percent = download.progress! * 100;
-                        return Text("$percent% done loading");
-                      } else {
-                        return const CircularProgressIndicator(
-                          color: Colors.white,
-                        );
-                      }
-                    },
-                  )
-                : Shimmer.fromColors(
-                    baseColor: const Color.fromARGB(255, 231, 231, 231),
-                    highlightColor: const Color.fromARGB(255, 241, 240, 240),
-                    child: Container(
-                      width: 245,
-                      height: 245,
-                      decoration: const BoxDecoration(
-                          shape: BoxShape.circle, color: Colors.grey),
-                    ))),
+      Flexible(
+        flex: 4,
+        child: Container(
+          margin: const EdgeInsets.all(30),
+          child: Center(
+              child: (_qrCode != null)
+                  ? CachedNetworkImage(
+                      width: MediaQuery.of(context).size.width * sizeQR,
+                      imageUrl: "http://203.176.177.251/dnc/dash/qr/$_qrCode",
+                      progressIndicatorBuilder: (context, url, download) {
+                        if (download.progress != null) {
+                          final double percent = download.progress! * 100;
+                          return Text("$percent% done loading");
+                        } else {
+                          return const CircularProgressIndicator(
+                            color: Colors.white,
+                          );
+                        }
+                      },
+                    )
+                  : Shimmer.fromColors(
+                      baseColor: const Color.fromARGB(255, 231, 231, 231),
+                      highlightColor: const Color.fromARGB(255, 241, 240, 240),
+                      child: Container(
+                        width: 245,
+                        height: 245,
+                        decoration: const BoxDecoration(
+                            shape: BoxShape.circle, color: Colors.grey),
+                      ))),
+        ),
       ),
-      (_nama != null)
-          ? SizedBox(
-              child: Center(
-                  child: Text(
-                _nama.toString(),
-                style: const TextStyle(
-                    fontSize: 30,
-                    fontFamily: "Segoeui",
-                    fontWeight: FontWeight.w700),
-              )),
-            )
-          : Shimmer.fromColors(
-              baseColor: const Color.fromARGB(255, 231, 231, 231),
-              highlightColor: const Color.fromARGB(255, 241, 240, 240),
-              child: Container(
-                width: MediaQuery.of(context).size.width * 0.45,
-                height: 35,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.grey),
-              )),
-      const SizedBox(
-        height: 20,
+      Flexible(
+        flex: 1,
+        child: (_nama != null)
+            ? SizedBox(
+                child: Center(
+                    child: Text(
+                  _nama.toString(),
+                  style: const TextStyle(
+                      fontSize: 30,
+                      fontFamily: "Segoeui",
+                      fontWeight: FontWeight.w700),
+                )),
+              )
+            : Shimmer.fromColors(
+                baseColor: const Color.fromARGB(255, 231, 231, 231),
+                highlightColor: const Color.fromARGB(255, 241, 240, 240),
+                child: Container(
+                  width: MediaQuery.of(context).size.width * 0.45,
+                  height: 35,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.grey),
+                )),
       ),
-      (_kartuPhone1 != null)
-          ? SizedBox(
-              child: Center(
-                  child: Text(
-                _kartuPhone1.toString(),
-                style: const TextStyle(fontSize: 20, fontFamily: "Segoeui"),
-              )),
-            )
-          : Shimmer.fromColors(
-              baseColor: const Color.fromARGB(255, 231, 231, 231),
-              highlightColor: const Color.fromARGB(255, 241, 240, 240),
-              child: Container(
-                width: MediaQuery.of(context).size.width * 0.38,
-                height: 25,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.grey),
-              )),
-      const SizedBox(
-        height: 20,
+      Flexible(
+          flex: 1,
+          child: Column(
+            children: [
+              (_kartuPhone1 != null)
+                  ? SizedBox(
+                      child: Center(
+                          child: Text(
+                        _kartuPhone1.toString(),
+                        style: const TextStyle(
+                            fontSize: 20, fontFamily: "Segoeui"),
+                      )),
+                    )
+                  : Shimmer.fromColors(
+                      baseColor: const Color.fromARGB(255, 231, 231, 231),
+                      highlightColor: const Color.fromARGB(255, 241, 240, 240),
+                      child: Container(
+                        width: MediaQuery.of(context).size.width * 0.38,
+                        height: 25,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Colors.grey),
+                      )),
+              (_kartuPhone2 != null)
+                  ? SizedBox(
+                      child: Center(
+                          child: Text(
+                        _kartuPhone2.toString(),
+                        style: const TextStyle(
+                            fontSize: 20, fontFamily: "Segoeui"),
+                      )),
+                    )
+                  : Shimmer.fromColors(
+                      baseColor: const Color.fromARGB(255, 231, 231, 231),
+                      highlightColor: const Color.fromARGB(255, 241, 240, 240),
+                      child: Container(
+                        width: MediaQuery.of(context).size.width * 0.38,
+                        height: 25,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Colors.grey),
+                      )),
+            ],
+          )),
+      Flexible(
+        flex: 1,
+        child: (_kartuEmail != null)
+            ? SizedBox(
+                child: Center(
+                    child: Text(
+                  _kartuEmail.toString(),
+                  style: const TextStyle(fontSize: 20, fontFamily: "Segoeui"),
+                )),
+              )
+            : Shimmer.fromColors(
+                baseColor: const Color.fromARGB(255, 231, 231, 231),
+                highlightColor: const Color.fromARGB(255, 241, 240, 240),
+                child: Container(
+                  width: MediaQuery.of(context).size.width * 0.42,
+                  height: 22,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.grey),
+                )),
       ),
-      (_kartuPhone2 != null)
-          ? SizedBox(
-              child: Center(
-                  child: Text(
-                _kartuPhone2.toString(),
-                style: const TextStyle(fontSize: 20, fontFamily: "Segoeui"),
-              )),
-            )
-          : Shimmer.fromColors(
-              baseColor: const Color.fromARGB(255, 231, 231, 231),
-              highlightColor: const Color.fromARGB(255, 241, 240, 240),
-              child: Container(
-                width: MediaQuery.of(context).size.width * 0.38,
-                height: 25,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.grey),
-              )),
-      const SizedBox(
-        height: 20,
-      ),
-      (_kartuEmail != null)
-          ? SizedBox(
-              child: Center(
-                  child: Text(
-                _kartuEmail.toString(),
-                style: const TextStyle(fontSize: 20, fontFamily: "Segoeui"),
-              )),
-            )
-          : Shimmer.fromColors(
-              baseColor: const Color.fromARGB(255, 231, 231, 231),
-              highlightColor: const Color.fromARGB(255, 241, 240, 240),
-              child: Container(
-                width: MediaQuery.of(context).size.width * 0.42,
-                height: 22,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.grey),
-              )),
-      const SizedBox(height: 30),
-      ElevatedButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          style: ElevatedButton.styleFrom(),
-          child: const Text("Kembali"))
+      Flexible(
+        flex: 1,
+        child: ElevatedButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            style: ElevatedButton.styleFrom(),
+            child: const Text("Kembali")),
+      )
     ]);
   }
 }
